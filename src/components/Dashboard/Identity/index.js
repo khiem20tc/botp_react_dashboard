@@ -1,13 +1,13 @@
-function Analyser() {
-  return AnalyserView();
+function Identity() {
+  return IdentityView();
 }
 
-function AnalyserView() {
+function IdentityView() {
   return (
     <>
-      <div>Analyser view</div>
+      <div>Identity view</div>
     </>
   );
 }
 
-export default Analyser;
+export default Identity;
