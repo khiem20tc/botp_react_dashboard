@@ -10,4 +10,4 @@ function SignInView() {
   );
 }
 
-export default SignIn();
+export default SignIn;
