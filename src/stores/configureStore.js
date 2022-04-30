@@ -1,21 +1,19 @@
-import { createStore, applyMiddleware, compose } from "redux";
 import thunkMiddleware from "redux-thunk";
-import { composeWithDevTools } from "redux-devtools-extension";
 import rootReducer from "reducers";
 import clientMiddleware from "stores/middlewares/client";
+import { configureStore } from "@reduxjs/toolkit";
 
-const configureStore = (preloadedState) => {
+const customConfigureStore = (preloadedState) => {
   // Middlewares
   const middlewares = [clientMiddleware, thunkMiddleware];
-  const middlewareEnhancer = applyMiddleware(...middlewares);
-  // Enhancers
-  const enhancers = [middlewareEnhancer];
-  const composer =
-    process.env.NODE_ENV === "development" ? composeWithDevTools : compose;
-  const composedEnhancers = composer(...enhancers);
   // Create store
-  const store = createStore(rootReducer, preloadedState, composedEnhancers);
+  const store = configureStore({
+    reducer: rootReducer,
+    middleware: middlewares,
+    devTools: process.env.NODE_ENV === "development",
+    preloadedState: preloadedState,
+  });
   return store;
 };
 
-export default configureStore;
+export default customConfigureStore;

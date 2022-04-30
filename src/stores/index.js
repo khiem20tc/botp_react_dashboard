@@ -1,12 +1,13 @@
 import { loadState, saveState } from "utils/services/localStorage";
-import configureStore from "stores/configureStore";
+import customConfigureStore from "./configureStore";
+
 // import { throttle } from "lodash";
 
-const createStoreSynchedWithLocalStorage = (initialState) => {
+const customCreateStore = (initialState) => {
   // Create store with initial value
   const store = initialState
-    ? configureStore(initialState)
-    : configureStore(loadState());
+    ? customConfigureStore(initialState)
+    : customConfigureStore(loadState());
   // Save new local state if don't use the old one
   if (initialState) {
     saveState(initialState);
@@ -25,4 +26,4 @@ const createStoreSynchedWithLocalStorage = (initialState) => {
   return store;
 };
 
-export default createStoreSynchedWithLocalStorage;
+export default customCreateStore;

@@ -1,9 +1,9 @@
-import "axios";
 import axios from "axios";
+import { loadState } from "./localStorage";
 
 const getBearerConfig = () => {
   const config = {};
-  const token = localStorage.get("session");
+  const token = loadState()?.user.token;
   config["headers"] = { Authorization: `Bearer ${token}` };
   return config;
 };

@@ -2,13 +2,13 @@ import CustomError from "constants/error";
 
 // Executes async query to the backend
 const clientMiddleware = (store) => (next) => async (action) => {
+  // Skip not async action
   if (!action.pendingActionType) {
     return next(action);
   }
 
   // Destructure the action
   const { pendingActionType: type, pendingAction: promise } = action;
-
   // Execute async dispatch
   let nextAction, returnValue;
   try {

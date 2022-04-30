@@ -1,5 +1,5 @@
-import Navbar from "components/common/Navbar";
-import Sidebar from "components/common/Sidebar";
+import Navbar from "components/Common/Navbar";
+import Sidebar from "components/Common/Sidebar";
 import { Outlet } from "react-router-dom";
 
 function Dashboard() {
