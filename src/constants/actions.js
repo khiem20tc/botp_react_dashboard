@@ -41,7 +41,10 @@ const LookupAction = {
   PENDING_GET_IDENTITY: "GET_IDENTITY",
   GET_IDENTITY_SUCCESS: "GET_IDENTITY_SUCCESS",
   GET_IDENTITY_FAILED: "GET_IDENTITY_FAILED",
+};
 
+// Provenance
+const ProvenanceAction = {
   PENDING_GET_EVENT_BROADCAST: "GET_EVENT_BROADCAST",
   GET_EVENT_BROADCAST_SUCCESS: "GET_EVENT_BROADCAST_SUCCESS",
   GET_EVENT_BROADCAST_FAILED: "GET_EVENT_BROADCAST_FAILED",
@@ -68,6 +71,7 @@ export {
   UserInputAction,
   StatisticAction,
   LookupAction,
+  ProvenanceAction,
   GeneralAction,
   ModalAction,
 };
