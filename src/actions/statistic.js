@@ -1,5 +1,5 @@
-const { StatisticAction } = require("constants/actions");
-const { default: StatisticRepository } = require("repositories/statistic");
+import { StatisticAction } from "constants/actions";
+import StatisticRepository from "repositories/statistic";
 
 const getGeneralStatisticAction = () => ({
   type: StatisticAction.PENDING_GET_GENERAL_STATISITC,
