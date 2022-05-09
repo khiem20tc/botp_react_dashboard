@@ -1,5 +1,5 @@
-const { LookupAction } = require("constants/actions");
-const { default: LookupRepository } = require("repositories/lookup");
+import { LookupAction } from "constants/actions";
+import LookupRepository from "repositories/lookup";
 
 const getIdentityAction = (bcAddress) => ({
   type: LookupAction.PENDING_GET_IDENTITY,

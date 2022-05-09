@@ -1,4 +1,4 @@
-const { GeneralAction } = require("constants/actions");
+import { GeneralAction } from "constants/actions";
 
 const emitNetworkErrorAction = () => ({
   type: GeneralAction.NETWORK_ERROR,
