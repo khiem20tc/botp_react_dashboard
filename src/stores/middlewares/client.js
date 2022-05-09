@@ -2,8 +2,8 @@ import CustomError from "constants/error";
 
 // Executes async query to the backend
 const clientMiddleware = (store) => (next) => async (action) => {
-  // Skip not async action
-  if (!action.pendingActionType) {
+  // Skip none-async action
+  if (!action.pendingAction) {
     return next(action);
   }
 
