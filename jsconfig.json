@@ -6,5 +6,5 @@
     "baseUrl": "./src/"
   },
   "exclude": ["node_modules", "build"],
-  "include": ["./src"]
+  "include": ["src/**/*"]
 }

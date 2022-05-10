@@ -7,7 +7,9 @@ function SignIn() {
 function SignInView() {
   const [someVar, setSomeVar] = useState();
   useEffect(() => {
-    setSomeVar(1);
+    if (someVar) {
+      alert("hehe");
+    }
   }, []);
 
   return (
