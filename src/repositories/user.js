@@ -1,9 +1,9 @@
-import { baseUrl } from "configuration";
+import { mainUrl } from "configs";
 import { postWithoutToken, getWithToken } from "utils/services/rest";
 
 class UserRepository {
   static async signUp(username, password) {
-    const url = `${baseUrl}/dashboardAuthen/signUp`;
+    const url = `${mainUrl}/dashboardAuthen/signUp`;
     const body = { username, password };
     try {
       const result = await postWithoutToken(url, body);
@@ -14,7 +14,7 @@ class UserRepository {
   }
 
   static async signIn(username, password) {
-    const url = `${baseUrl}/dashboardAuthen/signIn`;
+    const url = `${mainUrl}/dashboardAuthen/signIn`;
     const body = { username, password };
     try {
       const result = await postWithoutToken(url, body);
@@ -30,7 +30,7 @@ class UserRepository {
   }
 
   static async getUserInfo() {
-    const url = `${baseUrl}/dashboardAuthen/checkAuth`;
+    const url = `${mainUrl}/dashboardAuthen/checkAuth`;
     try {
       const result = await getWithToken(url);
       return result;
@@ -38,6 +38,8 @@ class UserRepository {
       throw error;
     }
   }
+
+  static async updateAvatar() {}
 }
 
 export default UserRepository;

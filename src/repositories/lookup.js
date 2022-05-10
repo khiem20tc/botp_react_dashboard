@@ -1,9 +1,9 @@
-import { baseUrl } from "configuration";
+import { mainUrl } from "configs";
 import { postWithToken } from "utils/services/rest";
 
 class LookupRepository {
   static async getIdentity(bcAddress) {
-    const url = `${baseUrl}/identity/getIdentity`;
+    const url = `${mainUrl}/identity/getIdentity`;
     const body = { bcAddr: bcAddress };
     try {
       const result = await postWithToken(url, body);

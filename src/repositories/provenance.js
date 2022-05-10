@@ -1,9 +1,9 @@
-import { baseUrl } from "configuration";
+import { mainUrl } from "configs";
 import { getWithToken } from "utils/services/rest";
 
 class ProvenanceRepository {
   static async getEventBroadcast(agentAddress, userAddress, transactionId) {
-    const url = `${baseUrl}/provenance/eventBroadcast`;
+    const url = `${mainUrl}/provenance/eventBroadcast`;
     // const body = { bcAddr: bcAddress };
     try {
       const result = await getWithToken(url);
@@ -14,7 +14,7 @@ class ProvenanceRepository {
   }
 
   static async getEventHistory(agentAddress, userAddress, transactionId) {
-    const url = `${baseUrl}/provenance/eventHistory`;
+    const url = `${mainUrl}/provenance/eventHistory`;
     // const body = { agentAddr: agentAddress, timeRanges: timeRangeArr };
     try {
       const result = await getWithToken(url);
