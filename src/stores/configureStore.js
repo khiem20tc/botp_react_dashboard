@@ -10,7 +10,7 @@ const customConfigureStore = (preloadedState) => {
   const store = configureStore({
     reducer: rootReducer,
     middleware: middlewares,
-    devTools: process.env.NODE_ENV === "development",
+    devTools: process.env.REACT_APP_ENV === "development",
     preloadedState: preloadedState,
   });
   return store;
