@@ -8,7 +8,7 @@ const clientMiddleware = (store) => (next) => async (action) => {
   }
 
   // Destructure the action
-  const { pendingActionType: type, pendingAction: promise } = action;
+  const { type, pendingAction: promise } = action;
   // Execute async dispatch
   let nextAction, returnValue;
   try {

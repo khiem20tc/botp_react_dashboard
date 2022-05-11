@@ -1,4 +1,9 @@
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Navigate,
+  Route,
+  Routes,
+} from "react-router-dom";
 import SignIn from "components/Auth/SignIn";
 import SignUp from "components/Auth/SignUp";
 import Dashboard from "components/Dashboard";
@@ -37,8 +42,11 @@ function AppView({ isLoggedIn }) {
       <Routes>
         <Route path="/auth/signin" element={<SignIn />} />
         <Route path="/auth/signup" element={<SignUp />} />
-        isLoggedIn ?
-        <Route path="/*" element={<Dashboard />} /> : <></>
+        {isLoggedIn ? (
+          <Route path="/*" element={<Dashboard />} />
+        ) : (
+          <Route path="/*" element={<Navigate to="/auth/signin" />} />
+        )}
       </Routes>
     </Router>
   );
