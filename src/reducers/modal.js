@@ -1,4 +1,4 @@
-import { ModalAction } from "constants/actions";
+import { ModalAction } from "constants/redux";
 
 const initialState = {
   isShowing: false,

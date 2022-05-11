@@ -1,4 +1,4 @@
-import { GeneralAction } from "constants/actions";
+import { GeneralAction } from "constants/redux";
 
 const emitNetworkErrorAction = () => ({
   type: GeneralAction.NETWORK_ERROR,

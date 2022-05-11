@@ -1,4 +1,4 @@
-import { ProvenanceAction } from "constants/actions";
+import { ProvenanceAction } from "constants/redux";
 import ProvenanceRepository from "repositories/provenance";
 
 const getEventBroadcastAction = (agentAddress, userAddress, transactionId) => ({

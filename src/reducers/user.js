@@ -1,4 +1,4 @@
-import { UserAction } from "constants/actions";
+import { UserAction } from "constants/redux";
 
 const initialState = {
   isLoggedIn: false,

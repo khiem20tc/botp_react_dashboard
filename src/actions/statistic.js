@@ -1,4 +1,4 @@
-import { StatisticAction } from "constants/actions";
+import { StatisticAction } from "constants/redux";
 import StatisticRepository from "repositories/statistic";
 
 const getGeneralStatisticAction = () => ({

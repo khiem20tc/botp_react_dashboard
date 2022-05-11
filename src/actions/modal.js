@@ -1,4 +1,4 @@
-import { ModalAction } from "constants/actions";
+import { ModalAction } from "constants/redux";
 
 const openModalAction = () => ({
   type: ModalAction.OPEN_MODAL,

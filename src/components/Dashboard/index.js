@@ -1,6 +1,6 @@
 import Navbar from "components/Common/Navbar";
 import Sidebar from "components/Common/Sidebar";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 import Analyser from "./Analyser";
 import Identity from "./Identity";
 import Provenance from "./Provenance";
@@ -22,6 +22,7 @@ function DashboardView() {
         <Route path="identity" element={<Identity />}></Route>
         <Route path="provenance" element={<Provenance />}></Route>
         <Route path="reminder" element={<Reminder />}></Route>
+        <Route path="*" element={<Navigate to="" />}></Route>
       </Routes>
     </>
   );

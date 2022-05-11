@@ -1,4 +1,4 @@
-import { UserAction } from "constants/actions";
+import { UserAction } from "constants/redux";
 import UserRepository from "repositories/user";
 
 const signInAction = (username, password) => ({

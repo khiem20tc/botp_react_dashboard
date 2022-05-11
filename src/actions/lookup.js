@@ -1,4 +1,4 @@
-import { LookupAction } from "constants/actions";
+import { LookupAction } from "constants/redux";
 import LookupRepository from "repositories/lookup";
 
 const getIdentityAction = (bcAddress) => ({

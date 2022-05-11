@@ -19,12 +19,6 @@ const UserAction = {
   CLEAN_USER_INFO: "CLEAR_USER_INFO",
 };
 
-const UserInputAction = {
-  ON_CHANGE: "ON_CHANGE",
-  ON_VALIDATE: "ON_VALIDATE",
-  ON_RESET: "ON_RESET",
-};
-
 // Statistic
 const StatisticAction = {
   PENDING_GET_GENERAL_STATISITC: "GET_GENERAL_STATISITC",
@@ -68,7 +62,6 @@ const ModalAction = {
 
 export {
   UserAction,
-  UserInputAction,
   StatisticAction,
   LookupAction,
   ProvenanceAction,
