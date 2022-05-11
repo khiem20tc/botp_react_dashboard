@@ -12,15 +12,18 @@ function Dashboard() {
 
 function DashboardView() {
   return (
-    <Routes>
+    <>
       <div>Dashboard view</div>
       <Navbar />
       <Sidebar />
-      <Route path="analyzer" element={<Analyser />}></Route>
-      <Route path="identity" element={<Identity />}></Route>
-      <Route path="provenance" element={<Provenance />}></Route>
-      <Route path="reminder" element={<Reminder />}></Route>
-    </Routes>
+      <Routes>
+        <Route path="" element={<Analyser />}></Route>
+        <Route path="analyzer" element={<Analyser />}></Route>
+        <Route path="identity" element={<Identity />}></Route>
+        <Route path="provenance" element={<Provenance />}></Route>
+        <Route path="reminder" element={<Reminder />}></Route>
+      </Routes>
+    </>
   );
 }
 

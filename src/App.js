@@ -10,6 +10,7 @@ import Dashboard from "components/Dashboard";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserInfoAction } from "actions/user";
 import { useEffect } from "react";
+import { Modal } from "@mui/material";
 
 function App() {
   const dispatch = useDispatch();
@@ -26,14 +27,14 @@ function App() {
 
   return (
     <>
-      <ModalView />
+      <ModalView children={<div>Nooo</div>} />
       <AppView isLoggedIn={isLoggedIn} />
     </>
   );
 }
 
-function ModalView({ isShowing, node }) {
-  return <></>; // TODO
+function ModalView({ isShowing, children }) {
+  return <>{/* <Modal keepMounted children={children} /> */}</>; // TODO
 }
 
 function AppView({ isLoggedIn }) {
