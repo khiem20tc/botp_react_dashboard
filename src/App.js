@@ -6,6 +6,7 @@ import Identity from "components/Dashboard/Identity";
 import Reminder from "components/Dashboard/Reminder";
 import Analyser from "components/Dashboard/Analyser";
 import Provenance from "components/Dashboard/Provenance";
+import PrivateRoute from "components/Common/PrivateRoute";
 
 function App() {
   return (
@@ -13,11 +14,13 @@ function App() {
       <Routes>
         <Route path="/auth/signin" element={<SignIn />} />
         <Route path="/auth/signup" element={<SignUp />} />
-        <Route path="/" element={<Dashboard />}>
-          <Route path="analyser" element={<Analyser />}></Route>
-          <Route path="identity" element={<Identity />}></Route>
-          <Route path="provenance" element={<Provenance />}></Route>
-          <Route path="remider" element={<Reminder />}></Route>
+        <Route path="/*" element={<PrivateRoute />}>
+          <Route path="*" element={<Dashboard />}>
+            <Route path="analyzer" element={<Analyser />}></Route>
+            <Route path="identity" element={<Identity />}></Route>
+            <Route path="provenance" element={<Provenance />}></Route>
+            <Route path="reminder" element={<Reminder />}></Route>
+          </Route>
         </Route>
       </Routes>
     </Router>
