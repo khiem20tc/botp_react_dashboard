@@ -1,14 +1,24 @@
-import { mainUrlDev, avatarUrlDev, uploadPresetDev } from "./development";
-import { mainUrlProd, avatarUrlProd, uploadPresetProd } from "./production";
+import {
+  mainBaseUrlDev,
+  avatarBaseUrlDev,
+  uploadPresetDev,
+} from "./development";
+import {
+  mainBaseUrlProd,
+  avatarBaseUrlProd,
+  uploadPresetProd,
+} from "./production";
 
 const reactEnv =
   !process.env.REACT_APP_ENV || process.env.REACT_APP_ENV === "PROD"
     ? "production"
     : "development";
 
-const mainUrl = reactEnv === "development" ? mainUrlDev : mainUrlProd;
-const avatarUrl = reactEnv === "development" ? avatarUrlDev : avatarUrlProd;
+const mainBaseUrl =
+  reactEnv === "development" ? mainBaseUrlDev : mainBaseUrlProd;
+const avatarBaseUrl =
+  reactEnv === "development" ? avatarBaseUrlDev : avatarBaseUrlProd;
 const uploadPreset =
   reactEnv === "development" ? uploadPresetDev : uploadPresetProd;
 
-export { mainUrl, avatarUrl, uploadPreset };
+export { mainBaseUrl, avatarBaseUrl, uploadPreset };

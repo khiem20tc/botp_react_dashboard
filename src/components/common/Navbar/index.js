@@ -1,13 +1,11 @@
+import { AppBar } from "@mui/material";
+
 function Navbar() {
   return NavbarView();
 }
 
 function NavbarView() {
-  return (
-    <>
-      <div>Navbar view</div>
-    </>
-  );
+  return <AppBar></AppBar>;
 }
 
 export default Navbar;

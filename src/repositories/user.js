@@ -1,9 +1,9 @@
-import { mainUrl } from "configs";
+import { mainBaseUrl, avatarBaseUrl, uploadPreset } from "configs";
 import { postWithoutToken, getWithToken } from "utils/services/rest";
 
 class UserRepository {
   static async signUp(username, password) {
-    const url = `${mainUrl}/dashboardAuthen/signUp`;
+    const url = `${mainBaseUrl}/dashboardAuthen/signUp`;
     const body = { username, password };
     try {
       const result = await postWithoutToken(url, body);
@@ -14,7 +14,7 @@ class UserRepository {
   }
 
   static async signIn(username, password) {
-    const url = `${mainUrl}/dashboardAuthen/signIn`;
+    const url = `${mainBaseUrl}/dashboardAuthen/signIn`;
     const body = { username, password };
     try {
       const result = await postWithoutToken(url, body);
@@ -30,7 +30,7 @@ class UserRepository {
   }
 
   static async getUserInfo() {
-    const url = `${mainUrl}/dashboardAuthen/checkAuth`;
+    const url = `${mainBaseUrl}/dashboardAuthen/checkAuth`;
     try {
       const result = await getWithToken(url);
       return result;
@@ -39,7 +39,17 @@ class UserRepository {
     }
   }
 
-  static async updateAvatar() {}
+  static async changeAvatar(bcAddress, avatarUrl) {
+    const url = `${mainBaseUrl}/authen/editAvatar`;
+    const presetUrl = `${avatarBaseUrl}/`;
+    const body = { bcAddress, avatar: avatarUrl };
+    try {
+      const result = await postWithoutToken(url, body);
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 export default UserRepository;

@@ -1,9 +1,9 @@
-import { mainUrl } from "configs";
+import { mainBaseUrl } from "configs";
 import { postWithToken } from "utils/services/rest";
 
 class StatisticRepository {
   static async getGeneralStatistic() {
-    const url = `${mainUrl}/dashboardAuthen/analyser`;
+    const url = `${mainBaseUrl}/dashboardAuthen/analyser`;
     const body = {};
     try {
       const result = await postWithToken(url, body);
@@ -14,7 +14,7 @@ class StatisticRepository {
   }
 
   static async getDailyStatistic(agentAddress, timeRangeArr) {
-    const url = `${mainUrl}/dashboardAuthen/analyserDaily`;
+    const url = `${mainBaseUrl}/dashboardAuthen/analyserDaily`;
     const body = { agentAddr: agentAddress, timeRanges: timeRangeArr };
     try {
       const result = await postWithToken(url, body);
