@@ -28,14 +28,11 @@ const userReducer = (state = initialState, action) => {
       const userInfo = action.data;
       return {
         ...state,
-        info: {
-          name: userInfo.name,
-          description: userInfo.description,
-        },
+        isLoggedIn: true,
       };
     }
     case UserAction.GET_USER_INFO_FAILED: {
-      return { ...state };
+      return { ...state, isLoggedIn: false };
     }
     case UserAction.CLEAN_USER_INFO: {
       return { ...initialState };
