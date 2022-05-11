@@ -10,9 +10,7 @@ import {
 } from "./production";
 
 const reactEnv =
-  !process.env.REACT_APP_ENV || process.env.REACT_APP_ENV === "PROD"
-    ? "production"
-    : "development";
+  process.env.REACT_APP_ENV === "production" ? "production" : "development";
 
 const mainBaseUrl =
   reactEnv === "development" ? mainBaseUrlDev : mainBaseUrlProd;

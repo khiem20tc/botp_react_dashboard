@@ -15,7 +15,7 @@ const useInput = (validator, initialValue = "") => {
         return {
           value: action.value,
           error: validator(action.value),
-          showError: false,
+          showError: true,
         };
       case UserInputAction.ON_VALIDATE:
         return {
