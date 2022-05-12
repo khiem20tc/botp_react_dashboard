@@ -30,11 +30,9 @@ class UserRepository {
   }
 
   static async getUserInfo() {
-    const url = `${mainBaseUrl}/dashboardAuthen/checkAuth`;
+    const url = `${mainBaseUrl}/dashboardAuthen/info`;
     try {
-      // throw new Error("Invalid token");
-      const result = { info: {} };
-      // const result = await getWithToken(url);
+      const result = await getWithToken(url);
       return result;
     } catch (error) {
       throw error;

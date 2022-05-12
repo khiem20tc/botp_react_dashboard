@@ -15,11 +15,9 @@ const customCreateStore = (initialState) => {
   // Save state change to the local storage
   store.subscribe(() => {
     const state = store.getState();
+    // Note: Not cache other data
     saveState({
       user: state.user,
-      // NOTE: Not cache data anymore
-      // categories: state.categories,
-      // items: state.items,
     });
   });
 
