@@ -1,7 +1,6 @@
 import {
   Alert,
   Box,
-  Button,
   Divider,
   FormControl,
   FormHelperText,
@@ -24,6 +23,7 @@ import { useDispatch } from "react-redux";
 import { signInAction } from "actions/user";
 import { useNavigate } from "react-router-dom";
 import botpLogo from "assets/images/logos/botp_logo.png";
+import landingBg from "assets/images/backgrounds/material_landing_abstract.png";
 
 function SignIn() {
   const dispatch = useDispatch();
@@ -77,11 +77,16 @@ function SignInView({
   onNavigateToSignUp,
 }) {
   return (
-    <Box
-      sx={{
+    <div
+      style={{
         display: "flex",
         justifyContent: "center",
-        // height: "100vh",
+        height: "100vh",
+        backgroundImage: `url(${landingBg})`,
+        backgroundPosition: "center center",
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover",
+        imageRendering: "-webkit-optimize-contrast",
       }}
     >
       <Box
@@ -93,6 +98,7 @@ function SignInView({
           // border: "1px solid gray",
           borderRadius: "20px",
           boxShadow: "0px 2px 30px 0px rgb(0, 0, 0, 0.1)",
+          backgroundColor: "#ffffff",
         }}
       >
         <Box
@@ -103,8 +109,12 @@ function SignInView({
             mb: 6,
           }}
         >
-          <img src={botpLogo} alt="botp logo" width="36" height="36" />
-          <Typography variant="h6" component="h6" sx={{ ml: 2 }}>
+          <img src={botpLogo} alt="botp logo" width="30" height="30" />
+          <Typography
+            variant="h6"
+            component="h6"
+            sx={{ ml: 2, color: "#034266", fontWeight: "bold" }}
+          >
             BOTP Dashboard
           </Typography>
         </Box>
@@ -227,7 +237,7 @@ function SignInView({
           </LoadingButton>
         </Box>
       </Box>
-    </Box>
+    </div>
   );
 }
 
