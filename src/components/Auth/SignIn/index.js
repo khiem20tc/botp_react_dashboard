@@ -77,7 +77,7 @@ function SignInView({
           Sign In
         </Typography>
         <FormControl
-          error={username.showError ? username.error : ""}
+          error={username.showError && username.error}
           sx={{ m: 1, width: "100%" }}
           variant="outlined"
         >
@@ -102,7 +102,7 @@ function SignInView({
           </FormHelperText>
         </FormControl>
         <FormControl
-          error={password.showError ? password.error : ""}
+          error={password.showError && password.error}
           sx={{ m: 1, width: "100%" }}
           variant="outlined"
         >
