@@ -130,8 +130,8 @@ function SignInView({
         <Divider sx={{ mb: 4 }} />
         <Typography
           variant="h4"
-          component="h4"
-          sx={{ mb: 4, fontWeight: "bold", textAlign: "center" }}
+          component="div"
+          sx={{ mb: 4, textAlign: "center" }}
         >
           Sign In
         </Typography>

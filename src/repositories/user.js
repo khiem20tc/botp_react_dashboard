@@ -40,7 +40,7 @@ class UserRepository {
     }
   }
 
-  static async doKYC(bcAddress, password, name, description) {
+  static async setupKYC(bcAddress, password, name, description) {
     const url = `${mainBaseUrl}/author/KYC`;
     const body = {
       bcAddress,

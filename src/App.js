@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getUserInfoAction } from "actions/user";
 import { useEffect } from "react";
 import { Modal } from "@mui/material";
+import SetupKYC from "components/Auth/SetupKYC";
 
 function App() {
   const dispatch = useDispatch();
@@ -43,6 +44,7 @@ function AppView({ isLoggedIn }) {
       <Routes>
         <Route path="/auth/signin" element={<SignIn />} />
         <Route path="/auth/signup" element={<SignUp />} />
+        <Route path="/auth/kyc" element={<SetupKYC />} />
         {isLoggedIn ? (
           <Route path="/*" element={<Dashboard />} />
         ) : (

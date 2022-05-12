@@ -21,29 +21,32 @@ import { UserInputAction } from "constants/hooks";
 import useInput from "hooks/useInput";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { signUpAction } from "actions/user";
+import { signInAction } from "actions/user";
 import { useNavigate } from "react-router-dom";
 import botpLogo from "assets/images/logos/botp_logo.png";
 import landingBg from "assets/images/backgrounds/material_landing_abstract.png";
+import { descriptionValidator, nameValidator } from "common/validators/kyc";
 
-function SignUp() {
+function SetupKYC() {
   const dispatch = useDispatch();
-  const dispatchSignUp = (username, password) =>
-    dispatch(signUpAction(username, password));
+  const dispatchSetupKyc = (bcAddress, password, name, description) =>
+    dispatch(setupKycAction(username, password));
   const navigate = useNavigate();
 
   const [toast, setToast] = useState(null);
-  const [username, dispatchUsername] = useInput(usernameValidator);
-  const [password, dispatchPassword] = useInput(passwordValidator);
-  const [isShowingPassword, setIsShowingPassowrd] = useState(false);
+  const [agentName, dispatchAgentName] = useInput(nameValidator);
+  const [description, dispatchDescription] = useInput(descriptionValidator);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const onSignUp = async () => {
-    if (!username.error && !password.error) {
+  const onSetupKyc = async () => {
+    if (!agentName.error && !description.error) {
       setIsSubmitting(true);
       setToast(null);
 
-      const signInResult = await dispatchSignUp(username.value, password.value);
+      const setupKycResult = await dispatchSignIn(
+        agentName.value,
+        description.value
+      );
       if (signInResult.success) {
         navigate("/");
       } else {
@@ -56,23 +59,18 @@ function SignUp() {
     }
   };
 
-  const onNavigateToSignIn = () => navigate("/auth/signin");
+  const onNavigateToSignUp = () => navigate("/auth/signup");
 
-  return SignUpView({
-    username,
-    dispatchUsername,
-    password,
-    dispatchPassword,
-    isShowingPassword,
-    setIsShowingPassowrd,
+  return SetupKYCView({
+    agentName, dispatchAgentName,
+    description, dispatchDescription,
     isSubmitting,
-    onSignUp,
-    onNavigateToSignIn,
+    onSetupKyc,
     toast,
   });
 }
 
-function SignUpView({
+function SetupKYCView({
   username,
   dispatchUsername,
   password,
@@ -80,8 +78,8 @@ function SignUpView({
   isShowingPassword,
   setIsShowingPassowrd,
   isSubmitting,
-  onSignUp,
-  onNavigateToSignIn,
+  onSignIn,
+  onNavigateToSignUp,
   toast,
 }) {
   return (
@@ -131,18 +129,15 @@ function SignUpView({
         <Typography
           variant="h4"
           component="div"
-          sx={{
-            mb: 4,
-            textAlign: "center",
-          }}
+          sx={{ mb: 4, textAlign: "center" }}
         >
-          Sign Up
+          Sign In
         </Typography>
         <Box sx={{ mb: 4 }}>
           <Collapse in={toast !== null}>
             {toast && (
               <Alert severity={toast.severity} sx={{ mb: 1 }}>
-                {String(toast.description)}
+                {toast.description}
               </Alert>
             )}
           </Collapse>
@@ -223,24 +218,24 @@ function SignUpView({
             size="large"
             loading={isSubmitting}
             disabled={isSubmitting}
-            onClick={onSignUp}
+            onClick={onSignIn}
           >
-            Sign Up
+            Sign in
           </LoadingButton>
         </Box>
         <Box sx={{ mb: 4 }}>
           <Divider sx={{ mb: 2 }}>
             <Typography variant="body2" component="div">
-              Already had an account?
+              Don't have an account?
             </Typography>
           </Divider>
           <LoadingButton
             sx={{ width: "100%" }}
             variant="outlined"
             size="large"
-            onClick={onNavigateToSignIn}
+            onClick={onNavigateToSignUp}
           >
-            Sign In
+            Sign Up
           </LoadingButton>
         </Box>
       </Box>
@@ -248,4 +243,4 @@ function SignUpView({
   );
 }
 
-export default SignUp;
+export default SetupKYC;

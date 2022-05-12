@@ -25,10 +25,23 @@ const cleanUserInfoAction = () => ({
   type: UserAction.CLEAN_USER_INFO,
 });
 
+const setupKycAction = (bcAddress, password, name, description) => ({
+  type: UserAction.PENDING_SETUP_KYC,
+  pendingAction: async () =>
+    await UserRepository.setupKYC(bcAddress, password, name, description),
+});
+
+const updateAvatarAction = () => ({
+  type: UserAction.PENDING_SETUP_KYC,
+  pendingAction: async () =>
+    await UserRepository.setupKYC(bcAddress, password, name, description),
+});
+
 export {
   signInAction,
   signUpAction,
   signOutAction,
   getUserInfoAction,
   cleanUserInfoAction,
+  setupKycAction,
 };
