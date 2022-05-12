@@ -1,5 +1,8 @@
 import {
+  Alert,
+  Box,
   Button,
+  Divider,
   FormControl,
   FormHelperText,
   IconButton,
@@ -17,10 +20,10 @@ import {
 import { UserInputAction } from "constants/hooks";
 import useInput from "hooks/useInput";
 import { useState } from "react";
-import "./index.css";
 import { useDispatch } from "react-redux";
 import { signInAction } from "actions/user";
 import { useNavigate } from "react-router-dom";
+import botpLogo from "assets/images/logos/botp_logo.png";
 
 function SignIn() {
   const dispatch = useDispatch();
@@ -28,6 +31,7 @@ function SignIn() {
     dispatch(signInAction(username, password));
   const navigate = useNavigate();
 
+  const [toast, setToast] = useState(null);
   const [username, dispatchUsername] = useInput(usernameValidator);
   const [password, dispatchPassword] = useInput(passwordValidator);
   const [isShowingPassword, setIsShowingPassowrd] = useState(false);
@@ -45,7 +49,10 @@ function SignIn() {
     }
   };
 
+  const onNavigateToSignUp = () => navigate("/auth/signup");
+
   return SignInView({
+    toast,
     username,
     dispatchUsername,
     password,
@@ -54,6 +61,7 @@ function SignIn() {
     setIsShowingPassowrd,
     isSubmitting,
     onSignIn,
+    onNavigateToSignUp,
   });
 }
 
@@ -66,82 +74,134 @@ function SignInView({
   setIsShowingPassowrd,
   isSubmitting,
   onSignIn,
+  onNavigateToSignUp,
 }) {
   return (
-    <div className="signIn">
-      <div className="signInWrapper">
-        <Typography variant="subtitle1" gutterBottom component="div">
-          BOTP Dashboard
-        </Typography>
-        <Typography variant="h4" gutterBottom component="div">
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        // height: "100vh",
+      }}
+    >
+      <Box
+        sx={{
+          width: "480px",
+          my: 4,
+          px: 4,
+          py: 4,
+          // border: "1px solid gray",
+          borderRadius: "20px",
+          boxShadow: "0px 2px 30px 0px rgb(0, 0, 0, 0.1)",
+        }}
+      >
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "start",
+            mb: 6,
+          }}
+        >
+          <img src={botpLogo} alt="botp logo" width="36" height="36" />
+          <Typography variant="h6" component="h6" sx={{ ml: 2 }}>
+            BOTP Dashboard
+          </Typography>
+        </Box>
+        <Typography
+          variant="h4"
+          component="h4"
+          sx={{ mb: 4, fontWeight: "bold" }}
+        >
           Sign In
         </Typography>
-        <FormControl
-          error={username.showError && username.error}
-          sx={{ m: 1, width: "100%" }}
-          variant="outlined"
-        >
-          <InputLabel htmlFor="outlined-username">Username</InputLabel>
-          <OutlinedInput
-            id="outlined-username"
-            type={"text"}
-            value={username.value}
-            onChange={(e) =>
-              dispatchUsername({
-                type: UserInputAction.ON_CHANGE,
-                value: e.target.value,
-              })
+        <Box sx={{ mb: 4 }}>
+          <Alert
+            action={
+              <IconButton
+                aria-label="close"
+                color="inherit"
+                size="small"
+                onClick={() => {}}
+              >
+                {/* <CloseIcon fontSize="inherit" /> */}
+              </IconButton>
             }
-            onBlur={(e) =>
-              dispatchUsername({ type: UserInputAction.ON_VALIDATE })
-            }
-            label="Username"
-          />
-          <FormHelperText id="outlined-adornment-username-text">
-            {username.showError ? username.error : ""}
-          </FormHelperText>
-        </FormControl>
-        <FormControl
-          error={password.showError && password.error}
-          sx={{ m: 1, width: "100%" }}
-          variant="outlined"
-        >
-          <InputLabel htmlFor="outlined-adornment-password">
-            Password
-          </InputLabel>
-          <OutlinedInput
-            id="outlined-adornment-password"
-            type={isShowingPassword ? "text" : "password"}
-            value={password.value}
-            onChange={(e) =>
-              dispatchPassword({
-                type: UserInputAction.ON_CHANGE,
-                value: e.target.value,
-              })
-            }
-            onBlur={(e) =>
-              dispatchPassword({ type: UserInputAction.ON_VALIDATE })
-            }
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={() => setIsShowingPassowrd(!isShowingPassword)}
-                  onMouseDown={(e) => e.preventDefault()}
-                  edge="end"
-                >
-                  {isShowingPassword ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-              </InputAdornment>
-            }
-            label="Password"
-          />
-          <FormHelperText id="outlined-adornment-password-text">
-            {password.showError ? password.error : ""}
-          </FormHelperText>
-        </FormControl>
-        <div>
+            sx={{ mb: 1 }}
+          >
+            Close me!
+          </Alert>
+          <FormControl
+            error={username.showError && username.error !== null}
+            sx={{ my: 1, width: "100%" }}
+            variant="outlined"
+          >
+            <InputLabel htmlFor="outlined-username" size="small">
+              Username
+            </InputLabel>
+            <OutlinedInput
+              id="outlined-username"
+              type={"text"}
+              value={username.value}
+              onChange={(e) =>
+                dispatchUsername({
+                  type: UserInputAction.ON_CHANGE,
+                  value: e.target.value,
+                })
+              }
+              onBlur={(e) =>
+                dispatchUsername({ type: UserInputAction.ON_VALIDATE })
+              }
+              label="Username"
+              size="small"
+            />
+            <FormHelperText id="outlined-adornment-username-text">
+              {username.showError ? username.error : ""}
+            </FormHelperText>
+          </FormControl>
+          <FormControl
+            error={password.showError && password.error !== null}
+            sx={{ my: 1, width: "100%" }}
+            variant="outlined"
+          >
+            <InputLabel htmlFor="outlined-adornment-password" size="small">
+              Password
+            </InputLabel>
+            <OutlinedInput
+              id="outlined-adornment-password"
+              type={isShowingPassword ? "text" : "password"}
+              value={password.value}
+              onChange={(e) =>
+                dispatchPassword({
+                  type: UserInputAction.ON_CHANGE,
+                  value: e.target.value,
+                })
+              }
+              onBlur={(e) =>
+                dispatchPassword({ type: UserInputAction.ON_VALIDATE })
+              }
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={() => setIsShowingPassowrd(!isShowingPassword)}
+                    onMouseDown={(e) => e.preventDefault()}
+                    edge="end"
+                  >
+                    {isShowingPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              }
+              label="Password"
+              size="small"
+              fullWidth
+            />
+            <FormHelperText id="outlined-adornment-password-text">
+              {password.showError ? password.error : ""}
+            </FormHelperText>
+          </FormControl>
           <LoadingButton
+            sx={{ width: "100%", mt: 1 }}
             variant="contained"
             size="large"
             loading={isSubmitting}
@@ -150,9 +210,24 @@ function SignInView({
           >
             Sign in
           </LoadingButton>
-        </div>
-      </div>
-    </div>
+        </Box>
+        <Box sx={{ mb: 4 }}>
+          <Divider sx={{ mb: 2 }}>
+            <Typography variant="body2" component="div">
+              Don't have an account?
+            </Typography>
+          </Divider>
+          <LoadingButton
+            sx={{ width: "100%" }}
+            variant="outlined"
+            size="large"
+            onClick={onNavigateToSignUp}
+          >
+            Sign Up
+          </LoadingButton>
+        </Box>
+      </Box>
+    </Box>
   );
 }
 
