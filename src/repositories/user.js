@@ -1,3 +1,4 @@
+import { toHaveAccessibleDescription } from "@testing-library/jest-dom/dist/matchers";
 import { mainBaseUrl, avatarBaseUrl, uploadPreset } from "configs";
 import { postWithoutToken, getWithToken } from "utils/services/rest";
 
@@ -33,6 +34,23 @@ class UserRepository {
     const url = `${mainBaseUrl}/dashboardAuthen/info`;
     try {
       const result = await getWithToken(url);
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async doKYC(bcAddress, password, name, description) {
+    const url = `${mainBaseUrl}/author/KYC`;
+    const body = {
+      bcAddress,
+      password,
+      type: "AGENT",
+      info: { name, description },
+    };
+
+    try {
+      const result = await postWithoutToken(url, body);
       return result;
     } catch (error) {
       throw error;

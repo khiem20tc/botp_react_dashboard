@@ -138,7 +138,7 @@ function SignUpView({
           <Collapse in={toast !== null}>
             {toast && (
               <Alert severity={toast.severity} sx={{ mb: 1 }}>
-                {toast.description}
+                {String(toast.description)}
               </Alert>
             )}
           </Collapse>
