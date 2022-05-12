@@ -1,6 +1,7 @@
 import {
   Alert,
   Box,
+  Collapse,
   Divider,
   FormControl,
   FormHelperText,
@@ -40,11 +41,17 @@ function SignIn() {
   const onSignIn = async () => {
     if (!username.error && !password.error) {
       setIsSubmitting(true);
+      setToast(null);
+
       const signInResult = await dispatchSignIn(username.value, password.value);
       if (signInResult.success) {
         navigate("/");
       } else {
         setIsSubmitting(false);
+        setToast({
+          severity: "error",
+          description: signInResult.error,
+        });
       }
     }
   };
@@ -52,7 +59,6 @@ function SignIn() {
   const onNavigateToSignUp = () => navigate("/auth/signup");
 
   return SignInView({
-    toast,
     username,
     dispatchUsername,
     password,
@@ -62,6 +68,7 @@ function SignIn() {
     isSubmitting,
     onSignIn,
     onNavigateToSignUp,
+    toast,
   });
 }
 
@@ -75,12 +82,14 @@ function SignInView({
   isSubmitting,
   onSignIn,
   onNavigateToSignUp,
+  toast,
 }) {
   return (
-    <div
+    <Box
       style={{
         display: "flex",
         justifyContent: "center",
+        alignItems: "start",
         height: "100vh",
         backgroundImage: `url(${landingBg})`,
         backgroundPosition: "center center",
@@ -126,21 +135,13 @@ function SignInView({
           Sign In
         </Typography>
         <Box sx={{ mb: 4 }}>
-          <Alert
-            action={
-              <IconButton
-                aria-label="close"
-                color="inherit"
-                size="small"
-                onClick={() => {}}
-              >
-                {/* <CloseIcon fontSize="inherit" /> */}
-              </IconButton>
-            }
-            sx={{ mb: 1 }}
-          >
-            Close me!
-          </Alert>
+          <Collapse in={toast !== null}>
+            {toast && (
+              <Alert severity={toast.severity} sx={{ mb: 1 }}>
+                {toast.description}
+              </Alert>
+            )}
+          </Collapse>
           <FormControl
             error={username.showError && username.error !== null}
             sx={{ my: 1, width: "100%" }}
@@ -162,6 +163,7 @@ function SignInView({
               onBlur={(e) =>
                 dispatchUsername({ type: UserInputAction.ON_VALIDATE })
               }
+              disabled={isSubmitting}
               label="Username"
               size="small"
             />
@@ -202,6 +204,7 @@ function SignInView({
                   </IconButton>
                 </InputAdornment>
               }
+              disabled={isSubmitting}
               label="Password"
               size="small"
               fullWidth
@@ -237,7 +240,7 @@ function SignInView({
           </LoadingButton>
         </Box>
       </Box>
-    </div>
+    </Box>
   );
 }
 
