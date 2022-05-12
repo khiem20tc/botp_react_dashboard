@@ -32,9 +32,7 @@ const setupKycAction = (bcAddress, password, name, description) => ({
 });
 
 const updateAvatarAction = () => ({
-  type: UserAction.PENDING_SETUP_KYC,
-  pendingAction: async () =>
-    await UserRepository.setupKYC(bcAddress, password, name, description),
+  type: UserAction.PENDING_UPDATE_AVATAR,
 });
 
 export {
@@ -44,4 +42,5 @@ export {
   getUserInfoAction,
   cleanUserInfoAction,
   setupKycAction,
+  updateAvatarAction,
 };

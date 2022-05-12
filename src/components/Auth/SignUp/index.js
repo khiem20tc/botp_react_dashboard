@@ -131,12 +131,19 @@ function SignUpView({
         <Typography
           variant="h4"
           component="div"
+          gutterBottom
           sx={{
-            mb: 4,
             textAlign: "center",
           }}
         >
           Sign Up
+        </Typography>
+        <Typography
+          variant="subtitle1"
+          component="div"
+          sx={{ mb: 4, textAlign: "center" }}
+        >
+          Create a new BOTP Dashboard account
         </Typography>
         <Box sx={{ mb: 4 }}>
           <Collapse in={toast !== null}>
@@ -164,9 +171,6 @@ function SignUpView({
                   value: e.target.value,
                 })
               }
-              onBlur={(e) =>
-                dispatchUsername({ type: UserInputAction.ON_VALIDATE })
-              }
               disabled={isSubmitting}
               label="Username"
               size="small"
@@ -192,9 +196,6 @@ function SignUpView({
                   type: UserInputAction.ON_CHANGE,
                   value: e.target.value,
                 })
-              }
-              onBlur={(e) =>
-                dispatchPassword({ type: UserInputAction.ON_VALIDATE })
               }
               endAdornment={
                 <InputAdornment position="end">

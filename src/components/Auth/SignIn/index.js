@@ -131,15 +131,23 @@ function SignInView({
         <Typography
           variant="h4"
           component="div"
-          sx={{ mb: 4, textAlign: "center" }}
+          gutterBottom
+          sx={{ textAlign: "center" }}
         >
           Sign In
+        </Typography>
+        <Typography
+          variant="subtitle1"
+          component="div"
+          sx={{ mb: 4, textAlign: "center" }}
+        >
+          Use your BOTP Dashboard account
         </Typography>
         <Box sx={{ mb: 4 }}>
           <Collapse in={toast !== null}>
             {toast && (
               <Alert severity={toast.severity} sx={{ mb: 1 }}>
-                {toast.description}
+                {String(toast.description)}
               </Alert>
             )}
           </Collapse>
@@ -160,9 +168,6 @@ function SignInView({
                   type: UserInputAction.ON_CHANGE,
                   value: e.target.value,
                 })
-              }
-              onBlur={(e) =>
-                dispatchUsername({ type: UserInputAction.ON_VALIDATE })
               }
               disabled={isSubmitting}
               label="Username"
@@ -189,9 +194,6 @@ function SignInView({
                   type: UserInputAction.ON_CHANGE,
                   value: e.target.value,
                 })
-              }
-              onBlur={(e) =>
-                dispatchPassword({ type: UserInputAction.ON_VALIDATE })
               }
               endAdornment={
                 <InputAdornment position="end">
