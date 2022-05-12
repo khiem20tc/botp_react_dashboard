@@ -1,5 +1,5 @@
-const CustomError = {
+const CommonErrors = {
   NETWORK_ERROR: "Network Error",
 };
 
-export default CustomError;
+export default CommonErrors;

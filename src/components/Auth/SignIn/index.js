@@ -37,7 +37,6 @@ function SignIn() {
     if (!username.error && !password.error) {
       setIsSubmitting(true);
       const signInResult = await dispatchSignIn(username.value, password.value);
-      console.log(signInResult);
       if (signInResult.success) {
         navigate("/");
       } else {

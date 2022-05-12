@@ -1,4 +1,5 @@
 import axios from "axios";
+import CommonErrors from "constants/error";
 import { loadState } from "./localStorage";
 
 // Utils
@@ -15,7 +16,9 @@ const _queryRest = async (promise) => {
     return await promise();
   } catch (error) {
     // Get error conditionally
-    throw error.response ? error.response.data : error;
+    throw String(error.message ?? "").includes(CommonErrors.NETWORK_ERROR)
+      ? error
+      : error.response.data;
   }
 };
 

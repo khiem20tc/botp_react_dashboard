@@ -17,14 +17,15 @@ const clientMiddleware = (store) => (next) => async (action) => {
     returnValue = { success: true, data };
   } catch (error) {
     // Skip toast message
-    const isNetworkError =
-      error.message &&
-      String(error.message).includes(CustomError.NETWORK_ERROR);
-
+    // - Note: Based on the server response, there's no need to examine
+    //         the http status code but javascript error message
+    const isNetworkError = String(error.message ?? "").includes(
+      CustomError.NETWORK_ERROR
+    );
     nextAction = {
       type: `${type}_FAILED`,
-      isNetworkError,
       error,
+      isNetworkError,
     };
     returnValue = { success: false, error, isNetworkError };
   }
