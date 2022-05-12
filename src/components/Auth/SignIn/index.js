@@ -114,23 +114,24 @@ function SignInView({
           sx={{
             display: "flex",
             alignItems: "center",
-            justifyContent: "start",
-            mb: 6,
+            justifyContent: "center",
+            mb: 2,
           }}
         >
-          <img src={botpLogo} alt="botp logo" width="30" height="30" />
+          <img src={botpLogo} alt="botp logo" width="28" height="28" />
           <Typography
-            variant="h6"
-            component="h6"
-            sx={{ ml: 2, color: "#034266", fontWeight: "bold" }}
+            variant="subtitle1"
+            component="div"
+            sx={{ ml: 1.5, color: "#034266", fontWeight: "bold" }}
           >
             BOTP Dashboard
           </Typography>
         </Box>
+        <Divider sx={{ mb: 4 }} />
         <Typography
           variant="h4"
           component="h4"
-          sx={{ mb: 4, fontWeight: "bold" }}
+          sx={{ mb: 4, fontWeight: "bold", textAlign: "center" }}
         >
           Sign In
         </Typography>

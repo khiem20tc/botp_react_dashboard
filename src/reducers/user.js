@@ -9,6 +9,7 @@ const initialState = {
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case UserAction.SIGN_UP_SUCCESS:
+      const userInfo = action.data;
       return { ...state, isLoggedIn: true };
     case UserAction.SIGN_UP_FAILED:
       return { ...state, isLoggedIn: false };
