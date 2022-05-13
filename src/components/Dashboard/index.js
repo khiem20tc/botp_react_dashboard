@@ -13,7 +13,6 @@ function Dashboard() {
 function DashboardView() {
   return (
     <>
-      <div>Dashboard view</div>
       <Navbar />
       <Sidebar />
       <Routes>
