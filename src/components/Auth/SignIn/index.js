@@ -53,12 +53,16 @@ function SignIn() {
           description: signInResult.error,
         });
       }
+    } else {
+      dispatchUsername({ type: UserInputAction.ON_VALIDATE });
+      dispatchPassword({ type: UserInputAction.ON_VALIDATE });
     }
   };
 
   const onNavigateToSignUp = () => navigate("/auth/signup");
 
   return SignInView({
+    toast,
     username,
     dispatchUsername,
     password,
@@ -68,11 +72,11 @@ function SignIn() {
     isSubmitting,
     onSignIn,
     onNavigateToSignUp,
-    toast,
   });
 }
 
 function SignInView({
+  toast,
   username,
   dispatchUsername,
   password,
@@ -82,7 +86,6 @@ function SignInView({
   isSubmitting,
   onSignIn,
   onNavigateToSignUp,
-  toast,
 }) {
   return (
     <Box
@@ -106,7 +109,7 @@ function SignInView({
           py: 4,
           // border: "1px solid gray",
           borderRadius: "20px",
-          boxShadow: "0px 2px 30px 0px rgb(0, 0, 0, 0.1)",
+          boxShadow: "0px 2px 30px 0px rgb(0, 0, 0, 0.2)",
           backgroundColor: "#ffffff",
         }}
       >
@@ -144,78 +147,82 @@ function SignInView({
           Use your BOTP Dashboard account
         </Typography>
         <Box sx={{ mb: 4 }}>
-          <Collapse in={toast !== null}>
-            {toast && (
-              <Alert severity={toast.severity} sx={{ mb: 1 }}>
-                {String(toast.description)}
-              </Alert>
-            )}
-          </Collapse>
-          <FormControl
-            error={username.showError && username.error !== null}
-            sx={{ my: 1, width: "100%" }}
-            variant="outlined"
-          >
-            <InputLabel htmlFor="outlined-username" size="small">
-              Username
-            </InputLabel>
-            <OutlinedInput
-              id="outlined-username"
-              type={"text"}
-              value={username.value}
-              onChange={(e) =>
-                dispatchUsername({
-                  type: UserInputAction.ON_CHANGE,
-                  value: e.target.value,
-                })
-              }
-              disabled={isSubmitting}
-              label="Username"
-              size="small"
-            />
-            <FormHelperText id="outlined-adornment-username-text">
-              {username.showError ? username.error : ""}
-            </FormHelperText>
-          </FormControl>
-          <FormControl
-            error={password.showError && password.error !== null}
-            sx={{ my: 1, width: "100%" }}
-            variant="outlined"
-          >
-            <InputLabel htmlFor="outlined-adornment-password" size="small">
-              Password
-            </InputLabel>
-            <OutlinedInput
-              id="outlined-adornment-password"
-              type={isShowingPassword ? "text" : "password"}
-              value={password.value}
-              onChange={(e) =>
-                dispatchPassword({
-                  type: UserInputAction.ON_CHANGE,
-                  value: e.target.value,
-                })
-              }
-              endAdornment={
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={() => setIsShowingPassowrd(!isShowingPassword)}
-                    onMouseDown={(e) => e.preventDefault()}
-                    edge="end"
-                  >
-                    {isShowingPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
-              }
-              disabled={isSubmitting}
-              label="Password"
-              size="small"
-              fullWidth
-            />
-            <FormHelperText id="outlined-adornment-password-text">
-              {password.showError ? password.error : ""}
-            </FormHelperText>
-          </FormControl>
+          <Box sx={{ mb: 1 }}>
+            <Collapse in={toast !== null}>
+              {toast && (
+                <Alert severity={toast.severity} sx={{ mb: 1 }}>
+                  {String(toast.description)}
+                </Alert>
+              )}
+            </Collapse>
+          </Box>
+          <Box sx={{ mb: 2 }}>
+            <FormControl
+              error={username.showError && username.error !== null}
+              sx={{ my: 0.5, width: "100%" }}
+              variant="outlined"
+            >
+              <InputLabel htmlFor="outlined-username" size="small">
+                Username
+              </InputLabel>
+              <OutlinedInput
+                id="outlined-username"
+                type={"text"}
+                value={username.value}
+                onChange={(e) =>
+                  dispatchUsername({
+                    type: UserInputAction.ON_CHANGE,
+                    value: e.target.value,
+                  })
+                }
+                disabled={isSubmitting}
+                label="Username"
+                size="small"
+              />
+              <FormHelperText id="outlined-adornment-username-text">
+                {username.showError ? username.error : ""}
+              </FormHelperText>
+            </FormControl>
+            <FormControl
+              error={password.showError && password.error !== null}
+              sx={{ my: 0.5, width: "100%" }}
+              variant="outlined"
+            >
+              <InputLabel htmlFor="outlined-adornment-password" size="small">
+                Password
+              </InputLabel>
+              <OutlinedInput
+                id="outlined-adornment-password"
+                type={isShowingPassword ? "text" : "password"}
+                value={password.value}
+                onChange={(e) =>
+                  dispatchPassword({
+                    type: UserInputAction.ON_CHANGE,
+                    value: e.target.value,
+                  })
+                }
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={() => setIsShowingPassowrd(!isShowingPassword)}
+                      onMouseDown={(e) => e.preventDefault()}
+                      edge="end"
+                    >
+                      {isShowingPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+                disabled={isSubmitting}
+                label="Password"
+                size="small"
+                fullWidth
+              />
+              <FormHelperText id="outlined-adornment-password-text">
+                {password.showError ? password.error : ""}
+              </FormHelperText>
+            </FormControl>
+          </Box>
           <LoadingButton
             sx={{ width: "100%", mt: 1 }}
             variant="contained"

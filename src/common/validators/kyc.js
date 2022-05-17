@@ -1,6 +1,6 @@
 const nameValidator = (name) =>
   !name
-    ? "Missing name"
+    ? "Missing agent name"
     : typeof name !== "string"
     ? "Wrong type."
     : name.length > 50
