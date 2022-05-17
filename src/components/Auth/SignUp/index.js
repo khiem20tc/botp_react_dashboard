@@ -15,7 +15,7 @@ import {
   Typography,
 } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
-import { VisibilityOff, Visibility } from "@mui/icons-material";
+import { VisibilityOff, Visibility, ArrowForward } from "@mui/icons-material";
 import {
   passwordValidator,
   usernameValidator,
@@ -26,8 +26,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setupKycAction, signUpAction } from "actions/user";
 import { useNavigate } from "react-router-dom";
-import botpLogo from "assets/images/logos/botp_logo.png";
-import landingBg from "assets/images/backgrounds/material_landing_abstract.png";
+import { botpLogoImg, landingBg, statusSuccessImg } from "assets/images";
 import { descriptionValidator, nameValidator } from "common/validators/kyc";
 
 function SignUp() {
@@ -107,9 +106,12 @@ function SignUp() {
     }
   };
 
-  const onUpdateAvatar = async () => {};
+  const onUpdateAvatar = async () => {
+    onStepNext();
+  };
 
   const onNavigateToSignIn = () => navigate("/auth/signin");
+  const onNavigateToHome = () => navigate("/");
 
   // Stepper list
   const stepperList = [
@@ -174,7 +176,7 @@ function SignUp() {
     >
       <Box
         sx={{
-          width: "600px",
+          width: "540px",
           my: 4,
           px: 4,
           py: 4,
@@ -192,7 +194,7 @@ function SignUp() {
             mb: 2,
           }}
         >
-          <img src={botpLogo} alt="botp logo" width="28" height="28" />
+          <img src={botpLogoImg} alt="botp logo" width="28" height="28" />
           <Typography
             variant="subtitle1"
             component="div"
@@ -202,46 +204,88 @@ function SignUp() {
           </Typography>
         </Box>
         <Divider sx={{ mb: 4 }} />
-        <Typography
-          variant="h4"
-          component="div"
-          gutterBottom
-          sx={{
-            textAlign: "center",
-          }}
-        >
-          Sign Up
-        </Typography>
-        <Typography
-          variant="subtitle1"
-          component="div"
-          sx={{ mb: 4, textAlign: "center" }}
-        >
-          Create a new BOTP Dashboard account
-        </Typography>
-        <Box sx={{ mb: 1 }}>
-          <Stepper activeStep={activeStep}>
-            {stepperList.map((ele, index) => {
-              const stepProps = {};
-              const labelProps = {};
-              if (isOptionalStep(index)) {
-                labelProps.optional = (
-                  <Typography variant={"caption"}>Optional</Typography>
-                );
-              }
-              return (
-                <Step key={ele.label} {...stepProps}>
-                  <StepLabel {...labelProps}>{ele.label}</StepLabel>
-                </Step>
-              );
-            })}
-          </Stepper>
-        </Box>
         {activeStep === stepperList.length ? (
-          <div>Create account finished!</div>
+          SignUpSuccessfullySectionView({ onNavigateToHome })
         ) : (
-          stepperList[activeStep].component()
+          <>
+            <Typography
+              variant="h4"
+              component="div"
+              gutterBottom
+              sx={{
+                textAlign: "center",
+              }}
+            >
+              Sign Up
+            </Typography>
+            <Typography
+              variant="subtitle1"
+              component="div"
+              sx={{ mb: 4, textAlign: "center" }}
+            >
+              Create a new BOTP Dashboard account
+            </Typography>
+            <Box sx={{ mb: 1 }}>
+              <Stepper activeStep={activeStep}>
+                {stepperList.map((ele, index) => {
+                  const stepProps = {};
+                  const labelProps = {};
+                  if (isOptionalStep(index)) {
+                    labelProps.optional = (
+                      <Typography variant={"caption"}>Optional</Typography>
+                    );
+                  }
+                  return (
+                    <Step key={ele.label} {...stepProps}>
+                      <StepLabel {...labelProps}>{ele.label}</StepLabel>
+                    </Step>
+                  );
+                })}
+              </Stepper>
+            </Box>
+            {stepperList[activeStep].component()}
+          </>
         )}
+      </Box>
+    </Box>
+  );
+}
+
+function SignUpSuccessfullySectionView({ onNavigateToHome }) {
+  return (
+    <Box sx={{ mb: 4 }}>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          width: "100%",
+          mb: 4,
+        }}
+      >
+        <img
+          src={statusSuccessImg}
+          alt="success status"
+          width="80"
+          height="80"
+        />
+        <Typography variant="h6" component="h6" sx={{ mt: 3 }}>
+          Create account successfully!
+        </Typography>
+        <Typography variant="subtitle1" component="div">
+          Your BOTP Dashboard account is ready to go
+        </Typography>
+      </Box>
+      <Box sx={{ display: "flex", justifyContent: "center" }}>
+        <LoadingButton
+          sx={{ mt: 1 }}
+          variant="contained"
+          size="large"
+          onClick={onNavigateToHome}
+          endIcon={<ArrowForward />}
+        >
+          Get started
+        </LoadingButton>
       </Box>
     </Box>
   );
@@ -480,7 +524,7 @@ function UpdateAvatarSectionView({
         </LoadingButton>
         <Box sx={{ display: "flex" }}>
           <LoadingButton
-            sx={{ mt: 1, mr: 1 }}
+            sx={{ mt: 1, mr: 2 }}
             variant="text"
             size="large"
             onClick={onStepSkipped}

@@ -24,7 +24,7 @@ import { useDispatch } from "react-redux";
 import { signInAction } from "actions/user";
 import { useNavigate } from "react-router-dom";
 import botpLogo from "assets/images/logos/botp_logo.png";
-import landingBg from "assets/images/backgrounds/material_landing_abstract.png";
+import { landingBg } from "assets/images";
 
 function SignIn() {
   const dispatch = useDispatch();
