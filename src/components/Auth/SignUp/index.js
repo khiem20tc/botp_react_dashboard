@@ -1,6 +1,7 @@
 import {
   Alert,
   Box,
+  Button,
   Collapse,
   Divider,
   FormControl,
@@ -13,6 +14,7 @@ import {
   StepLabel,
   Stepper,
   Typography,
+  Avatar,
 } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import { VisibilityOff, Visibility, ArrowForward } from "@mui/icons-material";
@@ -22,12 +24,13 @@ import {
 } from "common/validators/authentication";
 import { UserInputAction } from "constants/hooks";
 import useInput from "hooks/useInput";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setupKycAction, signUpAction } from "actions/user";
 import { useNavigate } from "react-router-dom";
 import { botpLogoImg, landingBg, statusSuccessImg } from "assets/images";
 import { descriptionValidator, nameValidator } from "common/validators/kyc";
+import { default as TextAvatar } from "react-avatar";
 
 function SignUp() {
   const dispatch = useDispatch();
@@ -42,8 +45,7 @@ function SignUp() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   // Stepper
   const [activeStep, setActiveStep] = useState(2);
-  const isOptionalStep = (step) =>
-    [2].findIndex((index) => index === step) !== -1;
+
   const onStepBack = () => setActiveStep((previousStep) => previousStep - 1);
   const onStepSkipped = () => setActiveStep((previousStep) => previousStep + 1);
   const onStepNext = () => setActiveStep((previousStep) => previousStep + 1);
@@ -116,7 +118,7 @@ function SignUp() {
   // Stepper list
   const stepperList = [
     {
-      label: "Create account",
+      label: "Setup account",
       component: () =>
         CreateAccountSectionView({
           toast,
@@ -147,7 +149,7 @@ function SignUp() {
         }),
     },
     {
-      label: "Update Avatar",
+      label: "Setup Avatar",
       component: () =>
         UpdateAvatarSectionView({
           name,
@@ -197,7 +199,7 @@ function SignUp() {
         >
           <img src={botpLogoImg} alt="botp logo" width="28" height="28" />
           <Typography
-            variant="subtitle1"
+            variant="body2"
             component="div"
             sx={{ ml: 1.5, color: "#034266", fontWeight: "bold" }}
           >
@@ -226,16 +228,16 @@ function SignUp() {
             >
               Create a new BOTP Dashboard account
             </Typography>
-            <Box sx={{ mb: 1 }}>
+            <Box sx={{ mb: 2 }}>
               <Stepper activeStep={activeStep}>
                 {stepperList.map((ele, index) => {
                   const stepProps = {};
                   const labelProps = {};
-                  if (isOptionalStep(index)) {
-                    labelProps.optional = (
-                      <Typography variant={"caption"}>Optional</Typography>
-                    );
-                  }
+                  // if (isOptionalStep(index)) {
+                  //   labelProps.optional = (
+                  //     <Typography variant={"caption"}>Optional</Typography>
+                  //   );
+                  // }
                   return (
                     <Step key={ele.label} {...stepProps}>
                       <StepLabel {...labelProps}>{ele.label}</StepLabel>
@@ -270,10 +272,10 @@ function SignUpSuccessfullySectionView({ onNavigateToHome }) {
           width="80"
           height="80"
         />
-        <Typography variant="h6" component="h6" sx={{ mt: 3 }}>
-          Create account successfully!
+        <Typography variant="h5" component="h5" sx={{ mt: 3 }}>
+          Sign up successfully!
         </Typography>
-        <Typography variant="subtitle1" component="div">
+        <Typography variant="body2" component="div" sx={{ mt: 1 }}>
           Your BOTP Dashboard account is ready to go
         </Typography>
       </Box>
@@ -496,56 +498,105 @@ function SetupKYCSectionView({
 function UpdateAvatarSectionView({
   name,
   onStepBack,
-  onStepSkipped,
   isSubmitting,
+  avatarFile,
+  setAvatarFile,
   onUpdateAvatar,
 }) {
+  const avatarName = name.value.length
+    ? name.value
+    : "GuestGuestGuestGuestGuest";
+  const inputFile = useRef(null);
+
+  const onSelectAvatarFile = () => {
+    inputFile.current.click();
+  };
+
+  const onFileChange = (event) => {
+    if (event.target.files && event.target.files[0]) {
+      setAvatarFile(URL.createObjectURL(event.target.files[0]));
+    }
+  };
+
   return (
     <Box sx={{ mb: 4 }}>
       <Box sx={{ mb: 4 }}>
         <Box
           sx={{
+            mt: 4,
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
           }}
         >
-          <Box sx={{ mr: 2 }}>
-            <img
-              src={botpLogoImg}
-              alt="your agent logo"
-              width="60"
-              height="60"
-            />
+          <Box sx={{ mr: 2, height: 120, width: 120 }}>
+            {avatarFile ? (
+              <Avatar
+                variant="square"
+                src={avatarFile}
+                alt={avatarName}
+                sx={{ height: 120, width: 120 }}
+              />
+            ) : (
+              <TextAvatar name={`${avatarName.split(" ")[0][0]}$`} size="120" />
+            )}
           </Box>
-          <Typography variant="h6" component="div">
-            {name.value.length ? name.value : "Guest"}
-          </Typography>
+          <Box>
+            <Typography variant="h6" component="h6">
+              {avatarName}
+            </Typography>
+            <Typography variant="body2" component="div">
+              This avatar would be displayed in both{" "}
+              <Box
+                sx={{
+                  display: "inline",
+                  color: "#034266",
+                  fontWeight: "bold",
+                }}
+              >
+                BOTP Dashboard
+              </Box>{" "}
+              and{" "}
+              <Box
+                sx={{
+                  display: "inline",
+                  color: "#034266",
+                  fontWeight: "bold",
+                }}
+              >
+                BOTP Authenticator
+              </Box>
+            </Typography>
+            <Button
+              variant="outlined"
+              size="small"
+              color="secondary"
+              onClick={onSelectAvatarFile}
+            >
+              Edit avatar
+            </Button>
+            <input
+              type="file"
+              ref={inputFile}
+              onChange={onFileChange}
+              // style={{ display: "none" }}
+            ></input>
+          </Box>
         </Box>
       </Box>
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
         <LoadingButton variant="text" size="large" onClick={onStepBack}>
           Back
         </LoadingButton>
-        <Box sx={{ display: "flex" }}>
-          <LoadingButton
-            sx={{ mr: 2 }}
-            variant="text"
-            size="large"
-            onClick={onStepSkipped}
-          >
-            Skip
-          </LoadingButton>
-          <LoadingButton
-            variant="contained"
-            size="large"
-            loading={isSubmitting}
-            disabled={isSubmitting}
-            onClick={onUpdateAvatar}
-          >
-            Next
-          </LoadingButton>
-        </Box>
+        <LoadingButton
+          variant="contained"
+          size="large"
+          loading={isSubmitting}
+          disabled={isSubmitting}
+          onClick={onUpdateAvatar}
+        >
+          Sign up
+        </LoadingButton>
       </Box>
     </Box>
   );

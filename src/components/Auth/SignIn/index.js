@@ -123,7 +123,7 @@ function SignInView({
         >
           <img src={botpLogo} alt="botp logo" width="28" height="28" />
           <Typography
-            variant="subtitle1"
+            variant="body2"
             component="div"
             sx={{ ml: 1.5, color: "#034266", fontWeight: "bold" }}
           >
@@ -133,7 +133,7 @@ function SignInView({
         <Divider sx={{ mb: 4 }} />
         <Typography
           variant="h4"
-          component="div"
+          component="h4"
           gutterBottom
           sx={{ textAlign: "center" }}
         >
