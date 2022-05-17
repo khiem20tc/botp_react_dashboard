@@ -224,7 +224,7 @@ function SignInView({
             </FormControl>
           </Box>
           <LoadingButton
-            sx={{ width: "100%", mt: 1 }}
+            sx={{ width: "100%" }}
             variant="contained"
             size="large"
             loading={isSubmitting}

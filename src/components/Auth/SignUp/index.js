@@ -150,6 +150,7 @@ function SignUp() {
       label: "Update Avatar",
       component: () =>
         UpdateAvatarSectionView({
+          name,
           avatarFile,
           setAvatarFile,
           isSubmitting,
@@ -278,7 +279,6 @@ function SignUpSuccessfullySectionView({ onNavigateToHome }) {
       </Box>
       <Box sx={{ display: "flex", justifyContent: "center" }}>
         <LoadingButton
-          sx={{ mt: 1 }}
           variant="contained"
           size="large"
           onClick={onNavigateToHome}
@@ -314,10 +314,10 @@ function CreateAccountSectionView({
           )}
         </Collapse>
       </Box>
-      <Box sx={{ mb: 2 }}>
+      <Box sx={{ mb: 4 }}>
         <FormControl
           error={username.showError && username.error !== null}
-          sx={{ my: 0.5, width: "100%" }}
+          sx={{ mt: 1, width: "100%" }}
           variant="outlined"
         >
           <InputLabel htmlFor="outlined-username" size="small">
@@ -343,7 +343,7 @@ function CreateAccountSectionView({
         </FormControl>
         <FormControl
           error={password.showError && password.error !== null}
-          sx={{ my: 0.5, width: "100%" }}
+          sx={{ mt: 1, width: "100%" }}
           variant="outlined"
         >
           <InputLabel htmlFor="outlined-adornment-password" size="small">
@@ -382,16 +382,10 @@ function CreateAccountSectionView({
         </FormControl>
       </Box>
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-        <LoadingButton
-          sx={{ mt: 1 }}
-          variant="text"
-          size="large"
-          onClick={onNavigateToSignIn}
-        >
+        <LoadingButton variant="text" size="large" onClick={onNavigateToSignIn}>
           Sign in
         </LoadingButton>
         <LoadingButton
-          sx={{ mt: 1 }}
           variant="contained"
           size="large"
           loading={isSubmitting}
@@ -426,10 +420,10 @@ function SetupKYCSectionView({
           )}
         </Collapse>
       </Box>
-      <Box sx={{ mb: 2 }}>
+      <Box sx={{ mb: 4 }}>
         <FormControl
           error={name.showError && name.error !== null}
-          sx={{ my: 0.5, width: "100%" }}
+          sx={{ mt: 1, width: "100%" }}
           variant="outlined"
         >
           <InputLabel htmlFor="outlined-username" size="small">
@@ -455,7 +449,7 @@ function SetupKYCSectionView({
         </FormControl>
         <FormControl
           error={description.showError && description.error !== null}
-          sx={{ my: 0.5, width: "100%" }}
+          sx={{ mt: 1, width: "100%" }}
           variant="outlined"
         >
           <InputLabel htmlFor="outlined-adornment-password" size="small">
@@ -482,16 +476,10 @@ function SetupKYCSectionView({
         </FormControl>
       </Box>
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-        <LoadingButton
-          sx={{ mt: 1 }}
-          variant="text"
-          size="large"
-          onClick={onStepBack}
-        >
+        <LoadingButton variant="text" size="large" onClick={onStepBack}>
           Back
         </LoadingButton>
         <LoadingButton
-          sx={{ mt: 1 }}
           variant="contained"
           size="large"
           loading={isSubmitting}
@@ -506,6 +494,7 @@ function SetupKYCSectionView({
 }
 
 function UpdateAvatarSectionView({
+  name,
   onStepBack,
   onStepSkipped,
   isSubmitting,
@@ -513,18 +502,34 @@ function UpdateAvatarSectionView({
 }) {
   return (
     <Box sx={{ mb: 4 }}>
-      <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-        <LoadingButton
-          sx={{ mt: 1 }}
-          variant="text"
-          size="large"
-          onClick={onStepBack}
+      <Box sx={{ mb: 4 }}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
         >
+          <Box sx={{ mr: 2 }}>
+            <img
+              src={botpLogoImg}
+              alt="your agent logo"
+              width="60"
+              height="60"
+            />
+          </Box>
+          <Typography variant="h6" component="div">
+            {name.value.length ? name.value : "Guest"}
+          </Typography>
+        </Box>
+      </Box>
+      <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+        <LoadingButton variant="text" size="large" onClick={onStepBack}>
           Back
         </LoadingButton>
         <Box sx={{ display: "flex" }}>
           <LoadingButton
-            sx={{ mt: 1, mr: 2 }}
+            sx={{ mr: 2 }}
             variant="text"
             size="large"
             onClick={onStepSkipped}
@@ -532,7 +537,6 @@ function UpdateAvatarSectionView({
             Skip
           </LoadingButton>
           <LoadingButton
-            sx={{ mt: 1 }}
             variant="contained"
             size="large"
             loading={isSubmitting}

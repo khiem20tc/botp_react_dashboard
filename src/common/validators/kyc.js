@@ -3,8 +3,8 @@ const nameValidator = (name) =>
     ? "Missing agent name"
     : typeof name !== "string"
     ? "Wrong type."
-    : name.length > 50
-    ? "Maximum name length is 50"
+    : name.length > 30
+    ? "Maximum name length is 30"
     : null;
 const descriptionValidator = (description) =>
   !description
