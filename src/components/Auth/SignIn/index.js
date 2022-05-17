@@ -159,7 +159,7 @@ function SignInView({
           <Box sx={{ mb: 2 }}>
             <FormControl
               error={username.showError && username.error !== null}
-              sx={{ my: 0.5, width: "100%" }}
+              sx={{ mb: 1, width: "100%" }}
               variant="outlined"
             >
               <InputLabel htmlFor="outlined-username" size="small">
@@ -185,7 +185,7 @@ function SignInView({
             </FormControl>
             <FormControl
               error={password.showError && password.error !== null}
-              sx={{ my: 0.5, width: "100%" }}
+              sx={{ mb: 1, width: "100%" }}
               variant="outlined"
             >
               <InputLabel htmlFor="outlined-adornment-password" size="small">

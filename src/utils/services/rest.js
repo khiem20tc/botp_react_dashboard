@@ -25,8 +25,8 @@ const _queryRest = async (promise) => {
 // Without token
 const getWithoutToken = async (url) =>
   await _queryRest(async () => await axios.get(url));
-const postWithoutToken = async (url, data) =>
-  await _queryRest(async () => await axios.post(url, data));
+const postWithoutToken = async (url, data, config) =>
+  await _queryRest(async () => await axios.post(url, data, config));
 
 // With bearer token
 const getWithToken = async (url) =>

@@ -31,8 +31,15 @@ const setupKycAction = (bcAddress, password, name, description) => ({
     await UserRepository.setupKYC(bcAddress, password, name, description),
 });
 
-const updateAvatarAction = () => ({
-  type: UserAction.PENDING_UPDATE_AVATAR,
+const uploadAvatarFileAction = (avatarFile) => ({
+  type: UserAction.PENDING_UPLOAD_AVATAR_FILE,
+  pendingAction: async () => await UserRepository.uploadAvatarFile(avatarFile),
+});
+
+const changeAvatarUrlAction = (bcAddress, avatarUrl) => ({
+  type: UserAction.PENDING_CHANGE_AVATAR_URL,
+  pendingAction: async () =>
+    await UserRepository.changeAvatarUrl(bcAddress, avatarUrl),
 });
 
 export {
@@ -42,5 +49,6 @@ export {
   getUserInfoAction,
   cleanUserInfoAction,
   setupKycAction,
-  updateAvatarAction,
+  uploadAvatarFileAction,
+  changeAvatarUrlAction,
 };

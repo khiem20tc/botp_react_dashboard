@@ -38,6 +38,18 @@ const userReducer = (state = initialState, action) => {
     case UserAction.CLEAN_USER_INFO: {
       return { ...initialState };
     }
+    case UserAction.UPLOAD_AVATAR_FILE_SUCCESS: {
+      return { ...initialState };
+    }
+    case UserAction.UPLOAD_AVATAR_FILE_FAILED: {
+      return { ...initialState };
+    }
+    case UserAction.CHANGE_AVATAR_URL_SUCCESS: {
+      return { ...initialState };
+    }
+    case UserAction.CHANGE_AVATAR_URL_FAILED: {
+      return { ...initialState };
+    }
     default:
       return state;
   }

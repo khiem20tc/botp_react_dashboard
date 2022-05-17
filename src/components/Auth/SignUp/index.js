@@ -26,7 +26,12 @@ import { UserInputAction } from "constants/hooks";
 import useInput from "hooks/useInput";
 import { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setupKycAction, signUpAction } from "actions/user";
+import {
+  setupKycAction,
+  signUpAction,
+  uploadAvatarFileAction,
+  changeAvatarUrlAction,
+} from "actions/user";
 import { useNavigate } from "react-router-dom";
 import { botpLogoImg, landingBg, statusSuccessImg } from "assets/images";
 import { descriptionValidator, nameValidator } from "common/validators/kyc";
@@ -38,6 +43,8 @@ function SignUp() {
     dispatch(signUpAction(username, password));
   const dispatchSetupKYC = (bcAddress, password, name, description) =>
     dispatch(setupKycAction(bcAddress, password, name, description));
+  const dispatchUploadAvatarFile = (avatarFile) =>
+    dispatch(uploadAvatarFileAction(avatarFile));
   const bcAddress = useSelector((state) => state.user.kyc?.bcAddress);
   const navigate = useNavigate();
 
@@ -47,7 +54,6 @@ function SignUp() {
   const [activeStep, setActiveStep] = useState(2);
 
   const onStepBack = () => setActiveStep((previousStep) => previousStep - 1);
-  const onStepSkipped = () => setActiveStep((previousStep) => previousStep + 1);
   const onStepNext = () => setActiveStep((previousStep) => previousStep + 1);
   // Stepper list
   // 1. Create account
@@ -59,6 +65,7 @@ function SignUp() {
   const [description, dispatchDescription] = useInput(descriptionValidator);
   // 3. Set Avatar
   const [avatarFile, setAvatarFile] = useState(null);
+  const inputFile = useRef(null);
 
   const onSignUp = async () => {
     if (!(username.error || password.error)) {
@@ -109,7 +116,22 @@ function SignUp() {
   };
 
   const onUpdateAvatar = async () => {
-    onStepNext();
+    if (avatarFile) {
+      setIsSubmitting(true);
+      setToast(null);
+      console.log(avatarFile);
+      const onUploadAvatarResult = await dispatchUploadAvatarFile(avatarFile);
+      console.log(onUploadAvatarResult);
+      if (onUploadAvatarResult.success) {
+        onStepNext(); // Set to next step
+      } else {
+        setToast({
+          severity: "error",
+          description: onUploadAvatarResult.error.error.message,
+        });
+      }
+    }
+    setIsSubmitting(false);
   };
 
   const onNavigateToSignIn = () => navigate("/auth/signin");
@@ -121,7 +143,6 @@ function SignUp() {
       label: "Setup account",
       component: () =>
         CreateAccountSectionView({
-          toast,
           username,
           dispatchUsername,
           password,
@@ -138,7 +159,6 @@ function SignUp() {
       label: "Setup KYC",
       component: () =>
         SetupKYCSectionView({
-          toast,
           name,
           dispatchName,
           description,
@@ -155,9 +175,9 @@ function SignUp() {
           name,
           avatarFile,
           setAvatarFile,
+          inputFile,
           isSubmitting,
           onStepBack,
-          onStepSkipped,
           onUpdateAvatar,
         }),
     },
@@ -228,7 +248,7 @@ function SignUp() {
             >
               Create a new BOTP Dashboard account
             </Typography>
-            <Box sx={{ mb: 2 }}>
+            <Box sx={{ mb: 4 }}>
               <Stepper activeStep={activeStep}>
                 {stepperList.map((ele, index) => {
                   const stepProps = {};
@@ -245,6 +265,15 @@ function SignUp() {
                   );
                 })}
               </Stepper>
+            </Box>
+            <Box sx={{ mb: 1 }}>
+              <Collapse in={toast !== null}>
+                {toast && (
+                  <Alert severity={toast.severity} sx={{ mb: 1 }}>
+                    {String(toast.description)}
+                  </Alert>
+                )}
+              </Collapse>
             </Box>
             {stepperList[activeStep].component()}
           </>
@@ -294,7 +323,6 @@ function SignUpSuccessfullySectionView({ onNavigateToHome }) {
 }
 
 function CreateAccountSectionView({
-  toast,
   username,
   dispatchUsername,
   password,
@@ -307,19 +335,10 @@ function CreateAccountSectionView({
 }) {
   return (
     <Box sx={{ mb: 4 }}>
-      <Box sx={{ mb: 1 }}>
-        <Collapse in={toast !== null}>
-          {toast && (
-            <Alert severity={toast.severity} sx={{ mb: 1 }}>
-              {String(toast.description)}
-            </Alert>
-          )}
-        </Collapse>
-      </Box>
       <Box sx={{ mb: 4 }}>
         <FormControl
           error={username.showError && username.error !== null}
-          sx={{ mt: 1, width: "100%" }}
+          sx={{ mb: 1, width: "100%" }}
           variant="outlined"
         >
           <InputLabel htmlFor="outlined-username" size="small">
@@ -345,7 +364,7 @@ function CreateAccountSectionView({
         </FormControl>
         <FormControl
           error={password.showError && password.error !== null}
-          sx={{ mt: 1, width: "100%" }}
+          sx={{ mb: 1, width: "100%" }}
           variant="outlined"
         >
           <InputLabel htmlFor="outlined-adornment-password" size="small">
@@ -402,7 +421,6 @@ function CreateAccountSectionView({
 }
 
 function SetupKYCSectionView({
-  toast,
   name,
   dispatchName,
   description,
@@ -413,19 +431,10 @@ function SetupKYCSectionView({
 }) {
   return (
     <Box sx={{ mb: 4 }}>
-      <Box sx={{ mb: 1 }}>
-        <Collapse in={toast !== null}>
-          {toast && (
-            <Alert severity={toast.severity} sx={{ mb: 1 }}>
-              {String(toast.description)}
-            </Alert>
-          )}
-        </Collapse>
-      </Box>
       <Box sx={{ mb: 4 }}>
         <FormControl
           error={name.showError && name.error !== null}
-          sx={{ mt: 1, width: "100%" }}
+          sx={{ mb: 1, width: "100%" }}
           variant="outlined"
         >
           <InputLabel htmlFor="outlined-username" size="small">
@@ -451,7 +460,7 @@ function SetupKYCSectionView({
         </FormControl>
         <FormControl
           error={description.showError && description.error !== null}
-          sx={{ mt: 1, width: "100%" }}
+          sx={{ mb: 1, width: "100%" }}
           variant="outlined"
         >
           <InputLabel htmlFor="outlined-adornment-password" size="small">
@@ -501,20 +510,20 @@ function UpdateAvatarSectionView({
   isSubmitting,
   avatarFile,
   setAvatarFile,
+  inputFile,
   onUpdateAvatar,
 }) {
-  const avatarName = name.value.length
-    ? name.value
-    : "GuestGuestGuestGuestGuest";
-  const inputFile = useRef(null);
+  const avatarName = name.value.length ? name.value : "Guest";
 
   const onSelectAvatarFile = () => {
     inputFile.current.click();
   };
 
   const onFileChange = (event) => {
-    if (event.target.files && event.target.files[0]) {
-      setAvatarFile(URL.createObjectURL(event.target.files[0]));
+    if (event.target.files?.[0] !== null) {
+      setAvatarFile(event.target.files[0]);
+    } else {
+      setAvatarFile(null);
     }
   };
 
@@ -523,7 +532,6 @@ function UpdateAvatarSectionView({
       <Box sx={{ mb: 4 }}>
         <Box
           sx={{
-            mt: 4,
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
@@ -533,7 +541,7 @@ function UpdateAvatarSectionView({
             {avatarFile ? (
               <Avatar
                 variant="square"
-                src={avatarFile}
+                src={URL.createObjectURL(avatarFile)} // Display image from blob
                 alt={avatarName}
                 sx={{ height: 120, width: 120 }}
               />
@@ -577,6 +585,7 @@ function UpdateAvatarSectionView({
             </Button>
             <input
               type="file"
+              accept="image/*"
               ref={inputFile}
               onChange={onFileChange}
               // style={{ display: "none" }}
@@ -595,7 +604,7 @@ function UpdateAvatarSectionView({
           disabled={isSubmitting}
           onClick={onUpdateAvatar}
         >
-          Sign up
+          Finish
         </LoadingButton>
       </Box>
     </Box>

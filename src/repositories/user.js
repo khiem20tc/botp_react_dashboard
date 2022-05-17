@@ -1,4 +1,3 @@
-import { toHaveAccessibleDescription } from "@testing-library/jest-dom/dist/matchers";
 import { mainBaseUrl, avatarBaseUrl, uploadPreset } from "configs";
 import { postWithoutToken, getWithToken } from "utils/services/rest";
 
@@ -57,9 +56,27 @@ class UserRepository {
     }
   }
 
-  static async changeAvatar(bcAddress, avatarUrl) {
+  static async uploadAvatarFile(avatarFile) {
+    const url = `${avatarBaseUrl}`;
+
+    // To use Axios, config FormData + XMLHttpRequest headers for Cloudinary
+    const formData = new FormData();
+    formData.append("file", avatarFile);
+    formData.append("upload_preset", uploadPreset);
+    const config = {
+      headers: { "X-Requested-With": "XMLHttpRequest" },
+    };
+
+    try {
+      const result = await postWithoutToken(url, formData, config);
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async changeAvatarUrl(bcAddress, avatarUrl) {
     const url = `${mainBaseUrl}/authen/editAvatar`;
-    const presetUrl = `${avatarBaseUrl}/`;
     const body = { bcAddress, avatar: avatarUrl };
     try {
       const result = await postWithoutToken(url, body);
