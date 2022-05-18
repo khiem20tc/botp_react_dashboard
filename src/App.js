@@ -3,10 +3,7 @@ import {
   Navigate,
   Route,
   Routes,
-  useNavigate,
 } from "react-router-dom";
-import SignIn from "components/Auth/SignIn";
-import SignUp from "components/Auth/SignUp";
 import Dashboard from "components/Dashboard";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserInfoAction } from "actions/user";

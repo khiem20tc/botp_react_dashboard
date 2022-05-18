@@ -31,9 +31,10 @@ const setupKycAction = (bcAddress, password, name, description) => ({
     await UserRepository.setupKYC(bcAddress, password, name, description),
 });
 
-const uploadAvatarFileAction = (avatarFile) => ({
+const uploadAvatarFileAction = (bcAddress, avatarFile) => ({
   type: UserAction.PENDING_UPLOAD_AVATAR_FILE,
-  pendingAction: async () => await UserRepository.uploadAvatarFile(avatarFile),
+  pendingAction: async () =>
+    await UserRepository.uploadAvatarFile(bcAddress, avatarFile),
 });
 
 const changeAvatarUrlAction = (bcAddress, avatarUrl) => ({

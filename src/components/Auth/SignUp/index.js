@@ -31,6 +31,7 @@ import {
   signUpAction,
   uploadAvatarFileAction,
   changeAvatarUrlAction,
+  signInAction,
 } from "actions/user";
 import { useNavigate } from "react-router-dom";
 import { botpLogoImg, landingBg, statusSuccessImg } from "assets/images";
@@ -46,10 +47,14 @@ function SignUp() {
   const dispatch = useDispatch();
   const dispatchSignUp = (username, password) =>
     dispatch(signUpAction(username, password));
+  const dispatchSignIn = (username, password) =>
+    dispatch(signInAction(username, password));
   const dispatchSetupKYC = (bcAddress, password, name, description) =>
     dispatch(setupKycAction(bcAddress, password, name, description));
-  const dispatchUploadAvatarFile = (avatarFile) =>
-    dispatch(uploadAvatarFileAction(avatarFile));
+  const dispatchUploadAvatarFile = (bcAddress, avatarFile) =>
+    dispatch(uploadAvatarFileAction(bcAddress, avatarFile));
+  const dispatchChangeAvatarUrl = (bcAddress, avatarUrl) =>
+    dispatch(changeAvatarUrlAction(bcAddress, avatarUrl));
 
   // Hook
   const navigate = useNavigate();
@@ -96,19 +101,37 @@ function SignUp() {
       setIsSubmitting(true);
       setToast(null);
 
-      const signInResult = await dispatchSignUp(username.value, password.value);
+      const signUpResult = await dispatchSignUp(username.value, password.value);
+      setIsSubmitting(false);
+      if (signUpResult.success) {
+        onStepNext(); // Set to next step
+      } else {
+        setToast({
+          severity: "error",
+          description: signUpResult.error,
+        });
+      }
+    } else {
+      dispatchUsername({ type: UserInputAction.ON_VALIDATE });
+      dispatchPassword({ type: UserInputAction.ON_VALIDATE });
+    }
+  };
+
+  const onSignIn = async () => {
+    if (!(username.error || password.error)) {
+      setIsSubmitting(true);
+      setToast(null);
+
+      const signInResult = await dispatchSignIn(username.value, password.value);
       setIsSubmitting(false);
       if (signInResult.success) {
-        onStepNext(); // Set to next step
+        navigate("/");
       } else {
         setToast({
           severity: "error",
           description: signInResult.error,
         });
       }
-    } else {
-      dispatchUsername({ type: UserInputAction.ON_VALIDATE });
-      dispatchPassword({ type: UserInputAction.ON_VALIDATE });
     }
   };
 
@@ -125,6 +148,7 @@ function SignUp() {
         name.value,
         description.value
       );
+      setIsSubmitting(false);
       if (setupKYCResult.success) {
         onStepNext(); // Set to next step
       } else {
@@ -143,13 +167,33 @@ function SignUp() {
     if (avatarFile) {
       setIsSubmitting(true);
       setToast(null);
-      const onUploadAvatarResult = await dispatchUploadAvatarFile(avatarFile);
-      if (onUploadAvatarResult.success) {
-        onStepNext(); // Set to next step
+
+      // First, upload avatar file
+      const uploadAvatarFileResult = await dispatchUploadAvatarFile(
+        bcAddress,
+        avatarFile
+      );
+      if (uploadAvatarFileResult.success) {
+        // Second, update avatar url in blockchain
+        const avatarUrl = uploadAvatarFileResult.data.url;
+        const changeAvatarUrlResult = await dispatchChangeAvatarUrl(
+          bcAddress,
+          avatarUrl
+        );
+        if (changeAvatarUrlResult.success) {
+          onStepNext(); // Set to next step
+          // Steup finished !!
+          onSignIn();
+        } else {
+          setToast({
+            severity: "error",
+            description: changeAvatarUrlResult.error,
+          });
+        }
       } else {
         setToast({
           severity: "error",
-          description: onUploadAvatarResult.error.error?.message,
+          description: uploadAvatarFileResult.error.error?.message,
         });
       }
     }
@@ -509,6 +553,9 @@ function SetupKYCSectionView({
             label="Description"
             size="small"
             fullWidth
+            multiline
+            minRows={2}
+            maxRows={4}
           />
           <FormHelperText id="outlined-adornment-description-text">
             {description.showError ? description.error : ""}

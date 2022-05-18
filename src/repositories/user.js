@@ -63,14 +63,14 @@ class UserRepository {
     }
   }
 
-  static async uploadAvatarFile(avatarFile) {
+  static async uploadAvatarFile(bcAddress, avatarFile) {
     const url = `https://api.cloudinary.com/v1_1/${cloudinaryCloudName}/image/upload`;
 
     // Create signature + append in body
     const searchParamEntries = [
       ["upload_preset", cloudinaryUploadPreset],
       ["unique_filename", false],
-      ["filename_override", "123"],
+      ["filename_override", bcAddress],
       ["timestamp", Date.now()],
     ];
     searchParamEntries.sort((e1, e2) =>

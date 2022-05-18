@@ -20,7 +20,7 @@ import {
 import { UserInputAction } from "constants/hooks";
 import useInput from "hooks/useInput";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { signInAction } from "actions/user";
 import { useNavigate } from "react-router-dom";
 import botpLogo from "assets/images/logos/botp_logo.png";
