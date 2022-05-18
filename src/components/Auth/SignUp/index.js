@@ -1,7 +1,7 @@
 import {
   Alert,
   Box,
-  Button,
+  CircularProgress,
   Collapse,
   Divider,
   FormControl,
@@ -17,7 +17,7 @@ import {
 } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import { VisibilityOff, Visibility, ArrowForward } from "@mui/icons-material";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import SquareAvatar from "components/Common/Avatar";
 import { UserInputAction } from "constants/hooks";
@@ -37,6 +37,12 @@ import { botpLogoImg, landingBg, statusSuccessImg } from "assets/images";
 import { descriptionValidator, nameValidator } from "common/validators/kyc";
 
 function SignUp() {
+  // State
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+  const kycInfo = useSelector((state) => state.user.info.kyc);
+  const bcAddress = useSelector((state) => state.user.info.account?.bcAddress);
+
+  // Dispatch
   const dispatch = useDispatch();
   const dispatchSignUp = (username, password) =>
     dispatch(signUpAction(username, password));
@@ -45,13 +51,14 @@ function SignUp() {
   const dispatchUploadAvatarFile = (avatarFile) =>
     dispatch(uploadAvatarFileAction(avatarFile));
 
-  const bcAddress = useSelector((state) => state.user.kyc?.bcAddress);
+  // Hook
   const navigate = useNavigate();
 
   const [toast, setToast] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
   // Stepper
-  const [activeStep, setActiveStep] = useState(2);
+  const [activeStep, setActiveStep] = useState(-1);
 
   const onStepBack = () => setActiveStep((previousStep) => previousStep - 1);
   const onStepNext = () => setActiveStep((previousStep) => previousStep + 1);
@@ -67,6 +74,23 @@ function SignUp() {
   const [avatarFile, setAvatarFile] = useState(null);
   const inputFile = useRef(null);
 
+  useEffect(() => {
+    // Go to home if signed in
+    if (isLoggedIn && bcAddress && kycInfo) {
+      navigate("/");
+    }
+    // Set the stepper
+    else {
+      if (!bcAddress) {
+        setActiveStep(0);
+      } else if (!kycInfo) {
+        setActiveStep(1);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // On function
   const onSignUp = async () => {
     if (!(username.error || password.error)) {
       setIsSubmitting(true);
@@ -119,9 +143,7 @@ function SignUp() {
     if (avatarFile) {
       setIsSubmitting(true);
       setToast(null);
-      console.log(avatarFile);
       const onUploadAvatarResult = await dispatchUploadAvatarFile(avatarFile);
-      console.log(onUploadAvatarResult);
       if (onUploadAvatarResult.success) {
         onStepNext(); // Set to next step
       } else {
@@ -183,6 +205,7 @@ function SignUp() {
     },
   ];
 
+  // View
   return (
     <Box
       style={{
@@ -227,7 +250,7 @@ function SignUp() {
           </Typography>
         </Box>
         <Divider sx={{ mb: 4 }} />
-        {activeStep === stepperList.length ? (
+        {activeStep >= stepperList.length ? (
           SignUpSuccessfullySectionView({ onNavigateToHome })
         ) : (
           <>
@@ -275,7 +298,13 @@ function SignUp() {
                 )}
               </Collapse>
             </Box>
-            {stepperList[activeStep].component()}
+            {activeStep > -1 ? (
+              stepperList[activeStep].component()
+            ) : (
+              <Box className="flex justify-center w-full py-8">
+                <CircularProgress />
+              </Box>
+            )}
           </>
         )}
       </Box>

@@ -98,7 +98,6 @@ class UserRepository {
 
     try {
       const result = await postWithoutToken(url, formData, config);
-      console.log(result);
       return result;
     } catch (error) {
       throw error;

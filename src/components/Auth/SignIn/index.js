@@ -19,25 +19,42 @@ import {
 } from "common/validators/authentication";
 import { UserInputAction } from "constants/hooks";
 import useInput from "hooks/useInput";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { signInAction } from "actions/user";
 import { useNavigate } from "react-router-dom";
 import botpLogo from "assets/images/logos/botp_logo.png";
 import { landingBg } from "assets/images";
 
 function SignIn() {
+  // State
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+  const kycInfo = useSelector((state) => state.user.info.kyc);
+
+  // Dispatch
   const dispatch = useDispatch();
   const dispatchSignIn = (username, password) =>
     dispatch(signInAction(username, password));
   const navigate = useNavigate();
 
+  // Hook
   const [toast, setToast] = useState(null);
   const [username, dispatchUsername] = useInput(usernameValidator);
   const [password, dispatchPassword] = useInput(passwordValidator);
   const [isShowingPassword, setIsShowingPassowrd] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  useEffect(() => {
+    if (isLoggedIn) {
+      if (!kycInfo) {
+        navigate("/auth/signup");
+      } else {
+        navigate("/");
+      }
+    }
+  }, [isLoggedIn, kycInfo, navigate]);
+
+  // On function
   const onSignIn = async () => {
     if (!username.error && !password.error) {
       setIsSubmitting(true);
@@ -45,7 +62,8 @@ function SignIn() {
 
       const signInResult = await dispatchSignIn(username.value, password.value);
       if (signInResult.success) {
-        navigate("/");
+        // Already check whether navigate to home in the useEffect
+        // navigate("/");
       } else {
         setIsSubmitting(false);
         setToast({
@@ -61,6 +79,7 @@ function SignIn() {
 
   const onNavigateToSignUp = () => navigate("/auth/signup");
 
+  // View
   return SignInView({
     toast,
     username,

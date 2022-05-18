@@ -13,7 +13,8 @@ const _getBearerConfig = () => {
 const _queryRest = async (promise) => {
   try {
     // Non-formating response
-    return await promise();
+    const result = await promise();
+    return result.data;
   } catch (error) {
     // Get error conditionally
     throw String(error.message ?? "").includes(CommonErrors.NETWORK_ERROR)

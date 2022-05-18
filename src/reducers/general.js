@@ -1,5 +1,3 @@
-import CustomError from "constants/error";
-
 const initialState = {
   isOnline: true,
 };

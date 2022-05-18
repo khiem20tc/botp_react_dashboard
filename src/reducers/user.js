@@ -1,26 +1,45 @@
 import { UserAction } from "constants/redux";
 
 const initialState = {
-  isLoggedIn: false,
-  token: null,
+  session: null,
   info: null,
 };
 
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
-    case UserAction.SIGN_UP_SUCCESS:
-      const userInfo = action.data;
-      return { ...state, isLoggedIn: true };
-    case UserAction.SIGN_UP_FAILED:
-      return { ...state, isLoggedIn: false };
-    case UserAction.SIGN_IN_SUCCESS:
+    case UserAction.SIGN_UP_SUCCESS: {
+      const userInfo = action.data.data;
       return {
         ...state,
-        isLoggedIn: true,
-        token: action.data.accessToken,
+        info: {
+          account: {
+            username: userInfo.username,
+            bcAddress: userInfo.bcAddress,
+          },
+        },
       };
+    }
+    case UserAction.SIGN_UP_FAILED:
+      return { ...state };
+    case UserAction.SIGN_IN_SUCCESS: {
+      const userInfo = action.data.data;
+      const token = action.data.token;
+      return {
+        ...state,
+        info: {
+          account: {
+            username: userInfo.username,
+            bcAddress: userInfo.bcAddress,
+          },
+          kyc: userInfo.info,
+          apiKey: userInfo.agent?.APIKey,
+          avatar: userInfo.avatar,
+        },
+        session: token,
+      };
+    }
     case UserAction.SIGN_IN_FAILED:
-      return { ...state, isLoggedIn: false };
+      return { ...state };
     case UserAction.SIGN_OUT_SUCCESS:
       return { ...initialState };
     case UserAction.SIGN_OUT_FAILED:
@@ -29,26 +48,37 @@ const userReducer = (state = initialState, action) => {
       const userInfo = action.data;
       return {
         ...state,
-        isLoggedIn: true,
+        info: {
+          account: {
+            username: userInfo.username,
+            bcAddress: userInfo.bcAddress,
+          },
+          kyc: userInfo.info,
+          apiKey: userInfo.agent?.APIKey,
+          avatar: userInfo.avatar,
+        },
       };
     }
     case UserAction.GET_USER_INFO_FAILED: {
-      return { ...state, isLoggedIn: false };
+      if (action.isNetworkError) {
+        return { ...state };
+      }
+      return { ...state };
     }
     case UserAction.CLEAN_USER_INFO: {
-      return { ...initialState };
+      return { ...state };
     }
     case UserAction.UPLOAD_AVATAR_FILE_SUCCESS: {
-      return { ...initialState };
+      return { ...state };
     }
     case UserAction.UPLOAD_AVATAR_FILE_FAILED: {
-      return { ...initialState };
+      return { ...state };
     }
     case UserAction.CHANGE_AVATAR_URL_SUCCESS: {
-      return { ...initialState };
+      return { ...state };
     }
     case UserAction.CHANGE_AVATAR_URL_FAILED: {
-      return { ...initialState };
+      return { ...state };
     }
     default:
       return state;

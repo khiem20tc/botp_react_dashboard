@@ -14,21 +14,21 @@ import { Modal } from "@mui/material";
 
 function App() {
   const dispatch = useDispatch();
-  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+  const session = useSelector((state) => state.user.session);
   const dispatchGetUserInfo = () => dispatch(getUserInfoAction());
 
   useEffect(() => {
-    const getUserInfo = async () => {
-      await dispatchGetUserInfo();
-    };
-    getUserInfo();
+    // const getUserInfo = async () => {
+    //   await dispatchGetUserInfo();
+    // };
+    // getUserInfo();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <>
       <ModalView children={<div>Nooo</div>} />
-      <AppView isLoggedIn={isLoggedIn} />
+      <AppView isLoggedIn={session !== null} />
     </>
   );
 }

@@ -42,12 +42,15 @@ const StatisticAction = {
   GET_DAILY_STATISTIC_FAILED: "GET_DAILY_STATISTIC_FAILED",
 };
 
-// Lookup
-const LookupAction = {
+// Identity
+const IdentityAction = {
   PENDING_GET_IDENTITY: "GET_IDENTITY",
   GET_IDENTITY_SUCCESS: "GET_IDENTITY_SUCCESS",
   GET_IDENTITY_FAILED: "GET_IDENTITY_FAILED",
+};
 
+// Provenance
+const ProvenanceAction = {
   PENDING_GET_EVENT_BROADCAST: "GET_EVENT_BROADCAST",
   GET_EVENT_BROADCAST_SUCCESS: "GET_EVENT_BROADCAST_SUCCESS",
   GET_EVENT_BROADCAST_FAILED: "GET_EVENT_BROADCAST_FAILED",
@@ -72,7 +75,8 @@ const ModalAction = {
 export {
   UserAction,
   StatisticAction,
-  LookupAction,
+  IdentityAction,
+  ProvenanceAction,
   GeneralAction,
   ModalAction,
 };
