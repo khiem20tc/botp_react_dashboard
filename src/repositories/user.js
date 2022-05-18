@@ -1,4 +1,11 @@
-import { mainBaseUrl, avatarBaseUrl, uploadPreset } from "configs";
+import {
+  mainBaseUrl,
+  cloudinaryCloudName,
+  cloudinaryUploadPreset,
+  cloudinaryApiKey,
+  cloudinaryApiSecret,
+} from "configs";
+import sha1 from "crypto-js/sha1";
 import { postWithoutToken, getWithToken } from "utils/services/rest";
 
 class UserRepository {
@@ -57,14 +64,34 @@ class UserRepository {
   }
 
   static async uploadAvatarFile(avatarFile) {
-    const url = `${avatarBaseUrl}`;
+    const url = `https://api.cloudinary.com/v1_1/${cloudinaryCloudName}/image/upload`;
 
-    // To use Axios, config FormData + XMLHttpRequest headers for Cloudinary
+    // Create signature + append in body
+    const searchParamEntries = [
+      ["upload_preset", cloudinaryUploadPreset],
+      ["unique_filename", false],
+      ["filename_override", "123"],
+      ["timestamp", Date.now()],
+    ];
+    searchParamEntries.sort((e1, e2) =>
+      e1[0] === e2[0] ? 0 : e1[0] > e2[0] ? 1 : -1
+    );
+    const searchParamsObj = new URLSearchParams(
+      Object.fromEntries(searchParamEntries)
+    );
+    const signature = sha1(searchParamsObj.toString() + cloudinaryApiSecret);
+
+    // Body data
+    // * To use Axios, config FormData + XMLHttpRequest headers for Cloudinary
     const formData = new FormData();
     formData.append("file", avatarFile);
-    formData.append("upload_preset", uploadPreset);
-    // formData.append("filename_override", "123");
-    // formData.append("unique_filename", false);
+    formData.append("api_key", cloudinaryApiKey);
+    formData.append("signature", signature);
+    for (const [key, value] of searchParamEntries) {
+      formData.append(key, value);
+    }
+
+    // Change header
     const config = {
       headers: { "X-Requested-With": "XMLHttpRequest" },
     };

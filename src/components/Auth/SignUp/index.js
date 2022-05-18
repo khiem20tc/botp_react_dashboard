@@ -45,6 +45,7 @@ function SignUp() {
     dispatch(setupKycAction(bcAddress, password, name, description));
   const dispatchUploadAvatarFile = (avatarFile) =>
     dispatch(uploadAvatarFileAction(avatarFile));
+
   const bcAddress = useSelector((state) => state.user.kyc?.bcAddress);
   const navigate = useNavigate();
 
@@ -127,7 +128,7 @@ function SignUp() {
       } else {
         setToast({
           severity: "error",
-          description: onUploadAvatarResult.error.error.message,
+          description: onUploadAvatarResult.error.error?.message,
         });
       }
     }

@@ -2,12 +2,14 @@ import {
   mainBaseUrlDev,
   cloudinaryCloudNameDev,
   cloudinaryUploadPresetDev,
+  cloudinaryApiKeyDev,
   cloudinaryApiSecretDev,
 } from "./development";
 import {
   mainBaseUrlProd,
   cloudinaryCloudNameProd,
   cloudinaryUploadPresetProd,
+  cloudinaryApiKeyProd,
   cloudinaryApiSecretProd,
 } from "./production";
 
@@ -23,6 +25,9 @@ const cloudinaryUploadPreset =
     ? cloudinaryUploadPresetDev
     : cloudinaryUploadPresetProd;
 
+const cloudinaryApiKey =
+  reactEnv === "development" ? cloudinaryApiKeyDev : cloudinaryApiKeyProd;
+
 const cloudinaryApiSecret =
   reactEnv === "development" ? cloudinaryApiSecretDev : cloudinaryApiSecretProd;
 
@@ -30,5 +35,6 @@ export {
   mainBaseUrl,
   cloudinaryCloudName,
   cloudinaryUploadPreset,
+  cloudinaryApiKey,
   cloudinaryApiSecret,
 };
