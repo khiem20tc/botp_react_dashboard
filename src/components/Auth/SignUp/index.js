@@ -38,9 +38,9 @@ import { descriptionValidator, nameValidator } from "common/validators/kyc";
 
 function SignUp() {
   // State
-  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
-  const kycInfo = useSelector((state) => state.user.info.kyc);
-  const bcAddress = useSelector((state) => state.user.info.account?.bcAddress);
+  const session = useSelector((state) => state.user.session);
+  const kycInfo = useSelector((state) => state.user.info?.kyc);
+  const bcAddress = useSelector((state) => state.user.info?.account?.bcAddress);
 
   // Dispatch
   const dispatch = useDispatch();
@@ -76,7 +76,7 @@ function SignUp() {
 
   useEffect(() => {
     // Go to home if signed in
-    if (isLoggedIn && bcAddress && kycInfo) {
+    if (session && bcAddress && kycInfo) {
       navigate("/");
     }
     // Set the stepper

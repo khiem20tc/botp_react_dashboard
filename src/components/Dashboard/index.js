@@ -7,10 +7,6 @@ import Provenance from "./Provenance";
 import Reminder from "./Reminder";
 
 function Dashboard() {
-  return DashboardView();
-}
-
-function DashboardView() {
   return (
     <>
       <Navbar />
