@@ -1,12 +1,14 @@
 import {
   mainBaseUrlDev,
-  avatarBaseUrlDev,
-  uploadPresetDev,
+  cloudinaryCloudNameDev,
+  cloudinaryUploadPresetDev,
+  cloudinaryApiSecretDev,
 } from "./development";
 import {
   mainBaseUrlProd,
-  avatarBaseUrlProd,
-  uploadPresetProd,
+  cloudinaryCloudNameProd,
+  cloudinaryUploadPresetProd,
+  cloudinaryApiSecretProd,
 } from "./production";
 
 const reactEnv =
@@ -14,9 +16,19 @@ const reactEnv =
 
 const mainBaseUrl =
   reactEnv === "development" ? mainBaseUrlDev : mainBaseUrlProd;
-const avatarBaseUrl =
-  reactEnv === "development" ? avatarBaseUrlDev : avatarBaseUrlProd;
-const uploadPreset =
-  reactEnv === "development" ? uploadPresetDev : uploadPresetProd;
+const cloudinaryCloudName =
+  reactEnv === "development" ? cloudinaryCloudNameDev : cloudinaryCloudNameProd;
+const cloudinaryUploadPreset =
+  reactEnv === "development"
+    ? cloudinaryUploadPresetDev
+    : cloudinaryUploadPresetProd;
 
-export { mainBaseUrl, avatarBaseUrl, uploadPreset };
+const cloudinaryApiSecret =
+  reactEnv === "development" ? cloudinaryApiSecretDev : cloudinaryApiSecretProd;
+
+export {
+  mainBaseUrl,
+  cloudinaryCloudName,
+  cloudinaryUploadPreset,
+  cloudinaryApiSecret,
+};

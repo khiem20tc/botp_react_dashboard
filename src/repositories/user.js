@@ -63,6 +63,8 @@ class UserRepository {
     const formData = new FormData();
     formData.append("file", avatarFile);
     formData.append("upload_preset", uploadPreset);
+    // formData.append("filename_override", "123");
+    // formData.append("unique_filename", false);
     const config = {
       headers: { "X-Requested-With": "XMLHttpRequest" },
     };

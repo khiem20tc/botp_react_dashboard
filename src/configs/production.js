@@ -1,4 +1,11 @@
 const mainBaseUrlProd = process.env.REACT_APP_MAIN_END_POINT;
-const avatarBaseUrlProd = process.env.REACT_APP_AVATAR_END_POINT;
-const uploadPresetProd = process.env.REACT_APP_UPLOAD_PRESET;
-export { mainBaseUrlProd, avatarBaseUrlProd, uploadPresetProd };
+const cloudinaryCloudNameProd = process.env.REACT_APP_CLOUNDINARY_CLOUD_NAME;
+const cloudinaryUploadPresetProd =
+  process.env.REACT_APP_CLOUNDINARY_UPLOAD_PRESET;
+const cloudinaryApiSecretProd = process.env.REACT_APP_CLOUNDINARY_API_SECRET;
+export {
+  mainBaseUrlProd,
+  cloudinaryCloudNameProd,
+  cloudinaryUploadPresetProd,
+  cloudinaryApiSecretProd,
+};
