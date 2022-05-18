@@ -14,18 +14,18 @@ import {
   StepLabel,
   Stepper,
   Typography,
-  Avatar,
 } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import { VisibilityOff, Visibility, ArrowForward } from "@mui/icons-material";
+import { useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import SquareAvatar from "components/Common/Avatar";
+import { UserInputAction } from "constants/hooks";
+import useInput from "hooks/useInput";
 import {
   passwordValidator,
   usernameValidator,
 } from "common/validators/authentication";
-import { UserInputAction } from "constants/hooks";
-import useInput from "hooks/useInput";
-import { useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import {
   setupKycAction,
   signUpAction,
@@ -35,7 +35,6 @@ import {
 import { useNavigate } from "react-router-dom";
 import { botpLogoImg, landingBg, statusSuccessImg } from "assets/images";
 import { descriptionValidator, nameValidator } from "common/validators/kyc";
-import { default as TextAvatar } from "react-avatar";
 
 function SignUp() {
   const dispatch = useDispatch();
@@ -533,28 +532,26 @@ function UpdateAvatarSectionView({
       <Box sx={{ mb: 4 }}>
         <Box
           sx={{
+            mb: 2,
             display: "flex",
+            flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
           }}
         >
-          <Box sx={{ mr: 2, height: 120, width: 120 }}>
-            {avatarFile ? (
-              <Avatar
-                variant="square"
-                src={URL.createObjectURL(avatarFile)} // Display image from blob
-                alt={avatarName}
-                sx={{ height: 120, width: 120 }}
-              />
-            ) : (
-              <TextAvatar name={`${avatarName.split(" ")[0][0]}$`} size="120" />
-            )}
+          <Box onClick={onSelectAvatarFile} sx={{ mb: 2 }}>
+            <SquareAvatar
+              size={160}
+              name={avatarName}
+              url={avatarFile ? URL.createObjectURL(avatarFile) : null}
+            />
           </Box>
-          <Box>
-            <Typography variant="h6" component="h6">
-              {avatarName}
-            </Typography>
-            <Typography variant="body2" component="div">
+          <Box sx={{ width: 250 }}>
+            <Typography
+              variant="caption"
+              component="div"
+              sx={{ textAlign: "center" }}
+            >
               This avatar would be displayed in both{" "}
               <Box
                 sx={{
@@ -576,22 +573,14 @@ function UpdateAvatarSectionView({
                 BOTP Authenticator
               </Box>
             </Typography>
-            <Button
-              variant="outlined"
-              size="small"
-              color="secondary"
-              onClick={onSelectAvatarFile}
-            >
-              Edit avatar
-            </Button>
-            <input
-              type="file"
-              accept="image/*"
-              ref={inputFile}
-              onChange={onFileChange}
-              // style={{ display: "none" }}
-            ></input>
           </Box>
+          <input
+            type="file"
+            accept="image/*"
+            ref={inputFile}
+            onChange={onFileChange}
+            style={{ display: "none" }}
+          ></input>
         </Box>
       </Box>
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
@@ -605,7 +594,7 @@ function UpdateAvatarSectionView({
           disabled={isSubmitting}
           onClick={onUpdateAvatar}
         >
-          Finish
+          Finish setup
         </LoadingButton>
       </Box>
     </Box>
