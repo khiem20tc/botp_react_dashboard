@@ -553,7 +553,7 @@ function UpdateAvatarSectionView({
               component="div"
               sx={{ textAlign: "center" }}
             >
-              (*) This avatar is used in both{" "}
+              This avatar will be used in both{" "}
               <Box
                 sx={{
                   display: "inline",

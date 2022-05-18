@@ -82,7 +82,7 @@ class UserRepository {
     const signature = sha1(searchParamsObj.toString() + cloudinaryApiSecret);
 
     // Body data
-    // * To use Axios, config FormData + XMLHttpRequest headers for Cloudinary
+    // Note: For Cloudinary use FormData + XMLHttpRequest headers + Axios
     const formData = new FormData();
     formData.append("file", avatarFile);
     formData.append("api_key", cloudinaryApiKey);
@@ -98,6 +98,7 @@ class UserRepository {
 
     try {
       const result = await postWithoutToken(url, formData, config);
+      console.log(result);
       return result;
     } catch (error) {
       throw error;
