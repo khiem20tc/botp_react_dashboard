@@ -539,20 +539,21 @@ function UpdateAvatarSectionView({
             alignItems: "center",
           }}
         >
-          <Box onClick={onSelectAvatarFile} sx={{ mb: 2 }}>
+          <Box sx={{ mb: 2 }}>
             <SquareAvatar
-              size={160}
+              onClick={onSelectAvatarFile}
+              size={180}
               name={avatarName}
               url={avatarFile ? URL.createObjectURL(avatarFile) : null}
             />
           </Box>
-          <Box sx={{ width: 250 }}>
+          <Box sx={{ width: "100%" }}>
             <Typography
               variant="caption"
               component="div"
               sx={{ textAlign: "center" }}
             >
-              This avatar would be displayed in both{" "}
+              (*) This avatar is used in both{" "}
               <Box
                 sx={{
                   display: "inline",

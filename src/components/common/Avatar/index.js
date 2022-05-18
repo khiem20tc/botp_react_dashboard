@@ -1,9 +1,33 @@
-import { Avatar as MUIAvatar, Box } from "@mui/material";
+import { Avatar as MUIAvatar, Box, Typography } from "@mui/material";
 import { default as TextAvatar } from "react-avatar";
+import CameraAlt from "@mui/icons-material/CameraAlt";
+import "./index.css";
 
-function SquareAvatar({ name, size, url }) {
+function SquareAvatar({ onClick, name, size, url, updatable }) {
+  const isUpdatable = updatable === undefined ? true : updatable;
+
   return (
-    <Box sx={{ height: size, width: size }}>
+    <Box
+      onClick={onClick}
+      sx={{
+        height: size,
+        width: size,
+        cursor: onClick ? "pointer" : "default",
+      }}
+      className="squareAvatar"
+    >
+      {isUpdatable && (
+        <div className="squareAvatarHover">
+          <CameraAlt sx={{ color: "#ffffff" }} />
+          <Typography
+            variant="body2"
+            component="div"
+            sx={{ mt: 1, color: "#ffffff" }}
+          >
+            Choose Image
+          </Typography>
+        </div>
+      )}
       {url ? (
         <MUIAvatar
           variant="square"
