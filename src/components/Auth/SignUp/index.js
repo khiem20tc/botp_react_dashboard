@@ -90,6 +90,7 @@ function SignUp() {
   const [name, dispatchName] = useInput(nameValidator);
   const [description, dispatchDescription] = useInput(descriptionValidator);
   // 3. Set Avatar
+  const [avatarBcAddress, setAvatarBcAddress] = useState(null);
   const [avatarFile, setAvatarFile] = useState(null);
   const inputFile = useRef(null);
 
@@ -184,6 +185,7 @@ function SignUp() {
       );
       setIsSubmitting(false);
       if (setupKYCResult.success) {
+        setAvatarBcAddress(bcAddress); // Save avatar bcAddress
         dispatchClearNotKycAccount(); // Clear old setting up data
         onStepNext(); // Set to next step
       } else {
@@ -205,7 +207,7 @@ function SignUp() {
     if (avatarFile) {
       // First, upload avatar file
       const uploadAvatarFileResult = await dispatchUploadAvatarFile(
-        bcAddress,
+        avatarBcAddress,
         avatarFile
       );
 
@@ -213,7 +215,7 @@ function SignUp() {
         // Second, update avatar url in blockchain
         const avatarUrl = uploadAvatarFileResult.data.url;
         const changeAvatarUrlResult = await dispatchChangeAvatarUrl(
-          bcAddress,
+          avatarBcAddress,
           avatarUrl
         );
         if (changeAvatarUrlResult.success) {

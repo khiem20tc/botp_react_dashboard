@@ -1,5 +1,6 @@
 import {
   AccountCircle,
+  Language,
   Mail,
   More,
   Notifications,
@@ -7,22 +8,30 @@ import {
 } from "@mui/icons-material";
 import {
   AppBar,
+  Avatar,
   Badge,
   Box,
   IconButton,
   Menu,
   MenuItem,
-  OutlinedInput,
   Toolbar,
+  Tooltip,
   Typography,
 } from "@mui/material";
+import { signOutAction } from "actions/user";
+// import { botpLogoImg } from "assets/images";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-function Navbar() {
-  return NavbarView();
-}
+function Navbar({ drawerWidth }) {
+  // State
+  const avatarUrl = useSelector((state) => state.user.info.avatar);
+  const agentName = useSelector((state) => state.user.info.kyc?.name);
+  // Dispatch
+  const dispatch = useDispatch();
+  const dispatchSignOut = () => dispatch(signOutAction());
 
-function NavbarView() {
+  // Hook
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
 
@@ -40,6 +49,11 @@ function NavbarView() {
   const handleMenuClose = () => {
     setAnchorEl(null);
     handleMobileMenuClose();
+  };
+
+  const onSignOut = () => {
+    dispatchSignOut();
+    handleMenuClose();
   };
 
   const handleMobileMenuOpen = (event) => {
@@ -64,11 +78,12 @@ function NavbarView() {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={onSignOut}>Sign out</MenuItem>
     </Menu>
   );
 
   const mobileMenuId = "primary-search-account-menu-mobile";
+
   const renderMobileMenu = (
     <Menu
       anchorEl={mobileMoreAnchorEl}
@@ -91,7 +106,7 @@ function NavbarView() {
             <Mail />
           </Badge>
         </IconButton>
-        <p>Messages</p>
+        <p>Languages</p>
       </MenuItem>
       <MenuItem>
         <IconButton
@@ -121,62 +136,57 @@ function NavbarView() {
   );
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+    <Box
+      position="fixed"
+      sx={{
+        // flexGrow: 1,
+        width: `calc(100% - ${drawerWidth}px)`,
+        ml: `${drawerWidth}px`,
+        zIndex: 2,
+      }}
+    >
+      <AppBar
+        color="transparent"
+        elevation={0}
+        sx={{
+          borderBottom: "solid rgb(0, 0, 0, 0.1) 1px",
+        }}
+      >
         <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            sx={{ mr: 2 }}
-          >
-            <Menu />
-          </IconButton>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ display: { xs: "none", sm: "block" } }}
-          >
-            MUI
-          </Typography>
-          <Search>
-            <OutlinedInput
-              placeholder="Search…"
-              inputProps={{ "aria-label": "search" }}
-            />
-          </Search>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             <IconButton
               size="large"
-              aria-label="show 4 new mails"
+              aria-label="show language"
               color="inherit"
+              sx={{ marginRight: 1 }}
             >
-              <Badge badgeContent={4} color="error">
-                <Mail />
+              <Badge badgeContent={"EN"} color="info">
+                <Language />
               </Badge>
             </IconButton>
             <IconButton
               size="large"
-              aria-label="show 17 new notifications"
+              aria-label="show new notifications"
               color="inherit"
+              sx={{ marginRight: 2 }}
             >
-              <Badge badgeContent={17} color="error">
+              <Badge badgeContent={1} color="error">
                 <Notifications />
               </Badge>
             </IconButton>
             <IconButton
-              size="large"
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
+              size="small"
+              aria-label="profile"
               color="inherit"
+              onClick={handleProfileMenuOpen}
             >
-              <AccountCircle />
+              <Avatar
+                src={avatarUrl}
+                children={String(agentName.split(" ")[0][0]).toUpperCase()}
+                variant="circular"
+                sx={{ width: 36, height: 36 }}
+              />
             </IconButton>
           </Box>
           <Box sx={{ display: { xs: "flex", md: "none" } }}>
