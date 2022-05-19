@@ -9,6 +9,7 @@ import {
   IconButton,
   InputAdornment,
   InputLabel,
+  LinearProgress,
   OutlinedInput,
   Step,
   StepLabel,
@@ -16,7 +17,7 @@ import {
   Typography,
 } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
-import { VisibilityOff, Visibility, ArrowForward } from "@mui/icons-material";
+import { VisibilityOff, Visibility } from "@mui/icons-material";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import SquareAvatar from "components/Common/Avatar";
@@ -38,12 +39,17 @@ import {
 import { useNavigate } from "react-router-dom";
 import { botpLogoImg, landingBg, statusSuccessImg } from "assets/images";
 import { descriptionValidator, nameValidator } from "common/validators/kyc";
+import {
+  activeIndetermineProgressBarAction,
+  deactiveIndetermineProgressBarAction,
+} from "actions/general";
 
 function SignUp() {
   // State
   const session = useSelector((state) => state.user.session);
   const bcAddress = useSelector((state) => state.user.notKycAccount?.bcAddress);
   const notKycAccount = useSelector((state) => state.user.notKycAccount);
+  const progressBar = useSelector((state) => state.general.progressBar);
   // Dispatch
   const dispatch = useDispatch();
   const dispatchSignUp = (username, password) =>
@@ -59,6 +65,10 @@ function SignUp() {
     dispatch(uploadAvatarFileAction(bcAddress, avatarFile));
   const dispatchChangeAvatarUrl = (bcAddress, avatarUrl) =>
     dispatch(changeAvatarUrlAction(bcAddress, avatarUrl));
+  const dispatchActiveIndetermineProgressBar = () =>
+    dispatch(activeIndetermineProgressBarAction());
+  const dispatchDeactiveIndetermineProgressBar = () =>
+    dispatch(deactiveIndetermineProgressBarAction());
 
   // Hook
   const navigate = useNavigate();
@@ -143,8 +153,10 @@ function SignUp() {
     if (!(username.error || password.error)) {
       setIsSubmitting(true);
       setToast(null);
+      dispatchActiveIndetermineProgressBar();
 
       const signInResult = await dispatchSignIn(username.value, password.value);
+      dispatchDeactiveIndetermineProgressBar();
       setIsSubmitting(false);
       if (signInResult.success) {
         navigate("/");
@@ -187,15 +199,16 @@ function SignUp() {
   };
 
   const onUpdateAvatar = async () => {
+    setIsSubmitting(true);
+    setToast(null);
+    // Have avatar file
     if (avatarFile) {
-      setIsSubmitting(true);
-      setToast(null);
-
       // First, upload avatar file
       const uploadAvatarFileResult = await dispatchUploadAvatarFile(
         bcAddress,
         avatarFile
       );
+
       if (uploadAvatarFileResult.success) {
         // Second, update avatar url in blockchain
         const avatarUrl = uploadAvatarFileResult.data.url;
@@ -206,25 +219,30 @@ function SignUp() {
         if (changeAvatarUrlResult.success) {
           onStepNext(); // Set to next step
           // Steup finished !!
-          // onSignIn();
+          onSignIn();
         } else {
+          setIsSubmitting(false);
           setToast({
             severity: "error",
             description: changeAvatarUrlResult.error,
           });
         }
       } else {
+        setIsSubmitting(false);
         setToast({
           severity: "error",
           description: uploadAvatarFileResult.error.error?.message,
         });
       }
     }
+    // Update avatar later
+    else {
+      onStepNext();
+    }
     setIsSubmitting(false);
   };
 
   const onNavigateToSignIn = () => navigate("/auth/signin");
-  const onNavigateToHome = () => navigate("/");
 
   // Stepper list
   const stepperList = [
@@ -285,8 +303,20 @@ function SignUp() {
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
         imageRendering: "-webkit-optimize-contrast",
+        position: "relative",
       }}
     >
+      <Box
+        sx={{
+          width: "100%",
+          position: "absolute",
+          top: 0,
+          display: progressBar ? "inline" : "none",
+          zIndex: "2",
+        }}
+      >
+        <LinearProgress />
+      </Box>
       <Box
         sx={{
           width: "540px",
@@ -318,7 +348,7 @@ function SignUp() {
         </Box>
         <Divider sx={{ mb: 4 }} />
         {activeStep >= stepperList.length ? (
-          SignUpSuccessfullySectionView({ onNavigateToHome })
+          SignUpSuccessfullySectionView()
         ) : (
           <>
             <Typography
@@ -379,16 +409,16 @@ function SignUp() {
   );
 }
 
-function SignUpSuccessfullySectionView({ onNavigateToHome }) {
+function SignUpSuccessfullySectionView() {
   return (
-    <Box sx={{ mb: 4 }}>
+    <Box>
       <Box
         sx={{
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
           width: "100%",
-          mb: 4,
+          my: 6,
         }}
       >
         <img
@@ -397,7 +427,7 @@ function SignUpSuccessfullySectionView({ onNavigateToHome }) {
           width="80"
           height="80"
         />
-        <Typography variant="h5" component="h5" sx={{ mt: 3 }}>
+        <Typography variant="h5" component="h5" sx={{ mt: 4 }}>
           Sign up successfully!
         </Typography>
         <Typography variant="body2" component="div" sx={{ mt: 1 }}>
@@ -408,7 +438,7 @@ function SignUpSuccessfullySectionView({ onNavigateToHome }) {
         <LoadingButton
           variant="contained"
           size="large"
-          onClick={onNavigateToHome}
+          onClick={() => {}}
           endIcon={<ArrowForward />}
         >
           Get started

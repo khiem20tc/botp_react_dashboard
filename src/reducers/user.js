@@ -46,18 +46,18 @@ const userReducer = (state = initialState, action) => {
     case UserAction.SIGN_OUT_FAILED:
       return { ...state };
     case UserAction.GET_USER_INFO_SUCCESS: {
-      const userInfo = action.data;
+      // const userInfo = action.data;
       return {
         ...state,
-        info: {
-          account: {
-            username: userInfo.username,
-            bcAddress: userInfo.bcAddress,
-          },
-          kyc: userInfo.info,
-          apiKey: userInfo.agent?.APIKey,
-          avatar: userInfo.avatar,
-        },
+        //   info: {
+        //     account: {
+        //       username: userInfo.username,
+        //       bcAddress: userInfo.bcAddress,
+        //     },
+        //     kyc: userInfo.info,
+        //     apiKey: userInfo.agent?.APIKey,
+        //     avatar: userInfo.avatar,
+        //   },
       };
     }
     case UserAction.GET_USER_INFO_FAILED: {

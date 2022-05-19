@@ -1,11 +1,14 @@
 import { GeneralAction } from "constants/redux";
 
-const emitNetworkErrorAction = () => ({
-  type: GeneralAction.NETWORK_ERROR,
+const activeIndetermineProgressBarAction = () => ({
+  type: GeneralAction.ACTIVE_INDETERMINE_PROGRESS_BAR,
 });
 
-const emitNetworkOkAction = () => ({
-  type: GeneralAction.NETWORK_OK,
+const deactiveIndetermineProgressBarAction = () => ({
+  type: GeneralAction.DEACTIVE_INDETERMINE_PROGRESS_BAR,
 });
 
-export { emitNetworkErrorAction, emitNetworkOkAction };
+export {
+  activeIndetermineProgressBarAction,
+  deactiveIndetermineProgressBarAction,
+};

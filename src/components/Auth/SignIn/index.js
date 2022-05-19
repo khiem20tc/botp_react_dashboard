@@ -19,9 +19,13 @@ import {
 } from "common/validators/authentication";
 import { UserInputAction } from "constants/hooks";
 import useInput from "hooks/useInput";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { saveNotKycAccountAction, signInAction } from "actions/user";
+import {
+  clearNotKycAccountAction,
+  saveNotKycAccountAction,
+  signInAction,
+} from "actions/user";
 import { useNavigate } from "react-router-dom";
 import botpLogo from "assets/images/logos/botp_logo.png";
 import { landingBg } from "assets/images";
@@ -34,6 +38,7 @@ function SignIn() {
   const dispatchSaveNotKycAccount = (username, password, bcAddress) =>
     dispatch(saveNotKycAccountAction(username, password, bcAddress));
   const navigate = useNavigate();
+  const dispatchClearNotKycAccount = () => dispatch(clearNotKycAccountAction());
 
   // Hook
   const [toast, setToast] = useState(null);
@@ -41,6 +46,11 @@ function SignIn() {
   const [password, dispatchPassword] = useInput(passwordValidator);
   const [isShowingPassword, setIsShowingPassowrd] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    dispatchClearNotKycAccount();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // On function
   const onSignIn = async () => {
