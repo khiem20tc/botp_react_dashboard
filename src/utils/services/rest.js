@@ -5,7 +5,7 @@ import { loadState } from "./localStorage";
 // Utils
 const _getBearerConfig = () => {
   const config = {};
-  const token = loadState()?.user.session;
+  const token = loadState()?.user?.session;
   config["headers"] = { Authorization: `Bearer ${token}` };
   return config;
 };

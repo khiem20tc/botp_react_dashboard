@@ -17,7 +17,7 @@ const customCreateStore = (initialState) => {
     const state = store.getState();
     // Note: Not cache other data
     saveState({
-      // user: state.user,
+      user: state.user,
     });
   });
 

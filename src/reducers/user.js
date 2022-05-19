@@ -18,7 +18,6 @@ const userReducer = (state = initialState, action) => {
             bcAddress: userInfo.bcAddress,
           },
         },
-        notKycAccount: null,
       };
     }
     case UserAction.SIGN_UP_FAILED:
@@ -61,18 +60,18 @@ const userReducer = (state = initialState, action) => {
         },
       };
     }
+    case UserAction.GET_USER_INFO_FAILED: {
+      if (action.isNetworkError) {
+        return { ...state };
+      }
+      return { ...state, session: null, info: null };
+    }
     case UserAction.SAVE_NOT_KYC_ACCOUNT: {
       const notKycAccount = action.data;
       return { ...state, notKycAccount };
     }
     case UserAction.CLEAR_NOT_KYC_ACCOUNT: {
       return { ...state, notKycAccount: null };
-    }
-    case UserAction.GET_USER_INFO_FAILED: {
-      if (action.isNetworkError) {
-        return { ...state };
-      }
-      return { ...initialState };
     }
     case UserAction.CLEAN_USER_INFO: {
       return { ...initialState };

@@ -32,6 +32,8 @@ import {
   uploadAvatarFileAction,
   changeAvatarUrlAction,
   signInAction,
+  saveNotKycAccountAction,
+  clearNotKycAccountAction,
 } from "actions/user";
 import { useNavigate } from "react-router-dom";
 import { botpLogoImg, landingBg, statusSuccessImg } from "assets/images";
@@ -40,15 +42,17 @@ import { descriptionValidator, nameValidator } from "common/validators/kyc";
 function SignUp() {
   // State
   const session = useSelector((state) => state.user.session);
-  const kycInfo = useSelector((state) => state.user.info?.kyc);
-  const bcAddress = useSelector((state) => state.user.info?.account?.bcAddress);
-
+  const bcAddress = useSelector((state) => state.user.notKycAccount?.bcAddress);
+  const notKycAccount = useSelector((state) => state.user.notKycAccount);
   // Dispatch
   const dispatch = useDispatch();
   const dispatchSignUp = (username, password) =>
     dispatch(signUpAction(username, password));
   const dispatchSignIn = (username, password) =>
     dispatch(signInAction(username, password));
+  const dispatchSaveNotKycAccount = (username, password, bcAddress) =>
+    dispatch(saveNotKycAccountAction(username, password, bcAddress));
+  const dispatchClearNotKycAccount = () => dispatch(clearNotKycAccountAction());
   const dispatchSetupKYC = (bcAddress, password, name, description) =>
     dispatch(setupKycAction(bcAddress, password, name, description));
   const dispatchUploadAvatarFile = (bcAddress, avatarFile) =>
@@ -81,17 +85,30 @@ function SignUp() {
 
   useEffect(() => {
     // Go to home if signed in
-    if (session && bcAddress && kycInfo) {
+    if (session && !notKycAccount) {
       navigate("/");
     }
     // Set the stepper
     else {
-      if (!bcAddress) {
+      if (!notKycAccount) {
         setActiveStep(0);
-      } else if (!kycInfo) {
+      } else {
+        dispatchUsername({
+          type: UserInputAction.ON_CHANGE,
+          value: notKycAccount.username,
+        });
+        dispatchPassword({
+          type: UserInputAction.ON_CHANGE,
+          value: notKycAccount.password,
+        });
+        setToast({
+          severity: "info",
+          description: "Continue setting up your account!",
+        });
         setActiveStep(1);
       }
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -104,6 +121,11 @@ function SignUp() {
       const signUpResult = await dispatchSignUp(username.value, password.value);
       setIsSubmitting(false);
       if (signUpResult.success) {
+        dispatchSaveNotKycAccount(
+          username.value,
+          password.value,
+          signUpResult.data.data.bcAddress
+        );
         onStepNext(); // Set to next step
       } else {
         setToast({
@@ -150,6 +172,7 @@ function SignUp() {
       );
       setIsSubmitting(false);
       if (setupKYCResult.success) {
+        dispatchClearNotKycAccount(); // Clear old setting up data
         onStepNext(); // Set to next step
       } else {
         setToast({
@@ -183,7 +206,7 @@ function SignUp() {
         if (changeAvatarUrlResult.success) {
           onStepNext(); // Set to next step
           // Steup finished !!
-          onSignIn();
+          // onSignIn();
         } else {
           setToast({
             severity: "error",
@@ -378,10 +401,10 @@ function SignUpSuccessfullySectionView({ onNavigateToHome }) {
           Sign up successfully!
         </Typography>
         <Typography variant="body2" component="div" sx={{ mt: 1 }}>
-          Your BOTP Dashboard account is ready to go
+          Your BOTP Dashboard account is now ready to go
         </Typography>
       </Box>
-      <Box sx={{ display: "flex", justifyContent: "center" }}>
+      {/* <Box sx={{ display: "flex", justifyContent: "center" }}>
         <LoadingButton
           variant="contained"
           size="large"
@@ -390,7 +413,7 @@ function SignUpSuccessfullySectionView({ onNavigateToHome }) {
         >
           Get started
         </LoadingButton>
-      </Box>
+      </Box> */}
     </Box>
   );
 }

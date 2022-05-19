@@ -21,7 +21,7 @@ import { UserInputAction } from "constants/hooks";
 import useInput from "hooks/useInput";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { signInAction } from "actions/user";
+import { saveNotKycAccountAction, signInAction } from "actions/user";
 import { useNavigate } from "react-router-dom";
 import botpLogo from "assets/images/logos/botp_logo.png";
 import { landingBg } from "assets/images";
@@ -31,6 +31,8 @@ function SignIn() {
   const dispatch = useDispatch();
   const dispatchSignIn = (username, password) =>
     dispatch(signInAction(username, password));
+  const dispatchSaveNotKycAccount = (username, password, bcAddress) =>
+    dispatch(saveNotKycAccountAction(username, password, bcAddress));
   const navigate = useNavigate();
 
   // Hook
@@ -48,9 +50,17 @@ function SignIn() {
 
       const signInResult = await dispatchSignIn(username.value, password.value);
       if (signInResult.success) {
+        // Ready to go!
         if (signInResult.data.data.info) {
           navigate("/");
-        } else {
+        }
+        // Not finish setting up kyc yet
+        else {
+          dispatchSaveNotKycAccount(
+            signInResult.data.data.username,
+            password.value,
+            signInResult.data.data.bcAddress
+          );
           navigate("/auth/signup");
         }
       } else {
