@@ -3,6 +3,7 @@ import { UserAction } from "constants/redux";
 const initialState = {
   session: null,
   info: null,
+  notKycAccount: null,
 };
 
 const userReducer = (state = initialState, action) => {
@@ -17,6 +18,7 @@ const userReducer = (state = initialState, action) => {
             bcAddress: userInfo.bcAddress,
           },
         },
+        notKycAccount: null,
       };
     }
     case UserAction.SIGN_UP_FAILED:
@@ -59,26 +61,21 @@ const userReducer = (state = initialState, action) => {
         },
       };
     }
+    case UserAction.SAVE_NOT_KYC_ACCOUNT: {
+      const notKycAccount = action.data;
+      return { ...state, notKycAccount };
+    }
+    case UserAction.CLEAR_NOT_KYC_ACCOUNT: {
+      return { ...state, notKycAccount: null };
+    }
     case UserAction.GET_USER_INFO_FAILED: {
       if (action.isNetworkError) {
         return { ...state };
       }
-      return { ...state };
+      return { ...initialState };
     }
     case UserAction.CLEAN_USER_INFO: {
-      return { ...state };
-    }
-    case UserAction.UPLOAD_AVATAR_FILE_SUCCESS: {
-      return { ...state };
-    }
-    case UserAction.UPLOAD_AVATAR_FILE_FAILED: {
-      return { ...state };
-    }
-    case UserAction.CHANGE_AVATAR_URL_SUCCESS: {
-      return { ...state };
-    }
-    case UserAction.CHANGE_AVATAR_URL_FAILED: {
-      return { ...state };
+      return { ...initialState };
     }
     default:
       return state;

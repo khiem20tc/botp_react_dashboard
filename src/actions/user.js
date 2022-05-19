@@ -31,6 +31,15 @@ const setupKycAction = (bcAddress, password, name, description) => ({
     await UserRepository.setupKYC(bcAddress, password, name, description),
 });
 
+const saveNotKycAccount = (bcAddress, password) => ({
+  type: UserAction.SAVE_NOT_KYC_ACCOUNT,
+  data: { bcAddress, password },
+});
+
+const clearNotKycAccount = () => ({
+  type: UserAction.CLEAR_NOT_KYC_ACCOUNT,
+});
+
 const uploadAvatarFileAction = (bcAddress, avatarFile) => ({
   type: UserAction.PENDING_UPLOAD_AVATAR_FILE,
   pendingAction: async () =>
@@ -50,6 +59,8 @@ export {
   getUserInfoAction,
   cleanUserInfoAction,
   setupKycAction,
+  saveNotKycAccount,
+  clearNotKycAccount,
   uploadAvatarFileAction,
   changeAvatarUrlAction,
 };
