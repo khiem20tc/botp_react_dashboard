@@ -142,7 +142,7 @@ function Navbar({ drawerWidth }) {
         // flexGrow: 1,
         width: `calc(100% - ${drawerWidth}px)`,
         ml: `${drawerWidth}px`,
-        zIndex: 1,
+        zIndex: 2,
       }}
     >
       <AppBar

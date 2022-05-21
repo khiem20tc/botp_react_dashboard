@@ -93,7 +93,7 @@ function SidebarView({ drawerWidth, activePage }) {
         flexDirection: "column",
         justifyContent: "space-between",
         borderRight: "solid rgb(0, 0, 0, 0.1) 1px",
-        zIndex: 1,
+        zIndex: 3,
       }}
     >
       <Toolbar>
@@ -104,7 +104,9 @@ function SidebarView({ drawerWidth, activePage }) {
             justifyContent: "start",
             width: drawerWidth,
             pl: 1,
+            cursor: "pointer",
           }}
+          onClick={() => navigate("/")}
         >
           <img src={botpLogoImg} alt="botp logo" width="32" height="32" />
           <Typography
