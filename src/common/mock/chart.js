@@ -50,9 +50,9 @@ const userDataWeek = [
     name: new Date(today.getTime() - 1000 * 60 * 60 * 24 * 7)
       .getDate()
       .toString(),
-    tu: 45000,
-    nu: 10000,
-    ou: 15000,
+    tu: 50000,
+    nu: 16600,
+    ou: 29000,
   },
   {
     name: new Date(today.getTime() - 1000 * 60 * 60 * 24 * 6)
@@ -66,17 +66,19 @@ const userDataWeek = [
     name: new Date(today.getTime() - 1000 * 60 * 60 * 24 * 5)
       .getDate()
       .toString(),
-    tu: 70000,
-    nu: 45600,
-    ou: 13200,
+
+    tu: 45000,
+    nu: 10000,
+    ou: 15000,
   },
   {
     name: new Date(today.getTime() - 1000 * 60 * 60 * 24 * 4)
       .getDate()
       .toString(),
-    tu: 60000,
-    nu: 35000,
-    ou: 22000,
+
+    tu: 70000,
+    nu: 45600,
+    ou: 13200,
   },
   {
     name: new Date(today.getTime() - 1000 * 60 * 60 * 24 * 3)
@@ -90,19 +92,19 @@ const userDataWeek = [
     name: new Date(today.getTime() - 1000 * 60 * 60 * 24 * 2)
       .getDate()
       .toString(),
-    tu: 50000,
-    nu: 16600,
-    ou: 29000,
+    tu: 60000,
+    nu: 35000,
+    ou: 22000,
   },
   {
     name: new Date(today.getTime() - 1000 * 60 * 60 * 24 * 1)
       .getDate()
       .toString(),
-    tu: 80000,
-    nu: 45600,
-    ou: 12000,
+    tu: 85000,
+    nu: 25000,
+    ou: 11000,
   },
-  { name: today.getDate().toString(), tu: 85000, nu: 25000, ou: 11000 },
+  { name: today.getDate().toString(), tu: 80000, nu: 45600, ou: 12000 },
 ];
 
 export { userDataToday, userDataWeek };

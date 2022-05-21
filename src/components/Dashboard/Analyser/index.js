@@ -5,16 +5,7 @@ import {
   ConfirmationNumber,
   Person,
 } from "@mui/icons-material";
-import {
-  Badge,
-  Box,
-  Button,
-  Card,
-  CardActions,
-  CardContent,
-  Divider,
-  Typography,
-} from "@mui/material";
+import { Box, Card, Typography } from "@mui/material";
 import { userDataToday, userDataWeek } from "common/mock/chart";
 import {
   CartesianGrid,
@@ -127,7 +118,7 @@ function Analyser() {
   );
 
   return (
-    <Box sx={{ pt: 4, pl: 4 }}>
+    <Box sx={{ py: 4, pl: 4 }}>
       <Typography variant="h6" sx={{ mb: 2 }}>
         Overview
       </Typography>
@@ -138,7 +129,7 @@ function Analyser() {
           analyzerBadge("456", true),
           <Person
             sx={{
-              fontSize: 48,
+              fontSize: 36,
             }}
           />
         )}
@@ -148,7 +139,7 @@ function Analyser() {
           analyzerBadge("67890", false),
           <ConfirmationNumber
             sx={{
-              fontSize: 48,
+              fontSize: 36,
             }}
           />
         )}
@@ -158,7 +149,7 @@ function Analyser() {
           analyzerBadge("123", true),
           <AccountBalance
             sx={{
-              fontSize: 48,
+              fontSize: 36,
             }}
           />
         )}
@@ -178,7 +169,7 @@ function Analyser() {
           }}
         >
           <Typography variant="body2" sx={{ mb: 2 }} color="text.secondary">
-            Daily users
+            Today users
           </Typography>
           <ResponsiveContainer height={380}>
             <LineChart data={userDataToday}>
@@ -228,7 +219,7 @@ function Analyser() {
             }}
           >
             <Typography variant="body2" sx={{ mb: 2 }} color="text.secondary">
-              Weekly users
+              Daily transactions
             </Typography>
             <ResponsiveContainer height={140}>
               <LineChart data={userDataWeek}>
@@ -267,7 +258,7 @@ function Analyser() {
             }}
           >
             <Typography variant="body2" sx={{ mb: 2 }} color="text.secondary">
-              Monthly users
+              Daily agents
             </Typography>
             <ResponsiveContainer height={140}>
               <LineChart data={userDataToday}>

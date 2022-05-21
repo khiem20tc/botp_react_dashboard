@@ -20,8 +20,9 @@ function Dashboard() {
       <Box
         component="main"
         sx={{
-          flexGrow: 1,
-          width: { sm: `calc(100% - ${drawerWidth}px)` },
+          flex: 1,
+          // width: { sm: `calc(100% - ${drawerWidth}px)` },
+          ml: `${drawerWidth + 47}px`,
         }}
       >
         <Toolbar />

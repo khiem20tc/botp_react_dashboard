@@ -87,11 +87,13 @@ function SidebarView({ drawerWidth, activePage }) {
     <Box
       sx={{
         // bgcolor: "rgb(0, 0, 0, 0.075)",
+        position: "fixed",
         height: "100vh",
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
         borderRight: "solid rgb(0, 0, 0, 0.1) 1px",
+        zIndex: 1,
       }}
     >
       <Toolbar>

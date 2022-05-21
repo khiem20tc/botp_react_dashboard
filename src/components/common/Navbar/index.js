@@ -142,7 +142,7 @@ function Navbar({ drawerWidth }) {
         // flexGrow: 1,
         width: `calc(100% - ${drawerWidth}px)`,
         ml: `${drawerWidth}px`,
-        zIndex: 2,
+        zIndex: 1,
       }}
     >
       <AppBar
@@ -150,6 +150,7 @@ function Navbar({ drawerWidth }) {
         elevation={0}
         sx={{
           borderBottom: "solid rgb(0, 0, 0, 0.1) 1px",
+          bgcolor: "#ffffff",
         }}
       >
         <Toolbar>
