@@ -4,7 +4,6 @@ import {
   Mail,
   More,
   Notifications,
-  Search,
 } from "@mui/icons-material";
 import {
   AppBar,
@@ -15,8 +14,6 @@ import {
   Menu,
   MenuItem,
   Toolbar,
-  Tooltip,
-  Typography,
 } from "@mui/material";
 import { signOutAction } from "actions/user";
 // import { botpLogoImg } from "assets/images";

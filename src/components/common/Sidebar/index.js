@@ -5,26 +5,20 @@ import {
   ArticleOutlined,
   Hexagon,
   HexagonOutlined,
-  Mail,
   Person,
   PersonOutlined,
 } from "@mui/icons-material";
-import { LoadingButton } from "@mui/lab";
 import {
   Box,
-  Divider,
   List,
   ListItem,
-  ListItemAvatar,
   ListItemButton,
   ListItemIcon,
-  ListItemText,
   Toolbar,
   Typography,
 } from "@mui/material";
 import { botpLogoImg } from "assets/images";
 import { useEffect, useState } from "react";
-import Avatar from "react-avatar";
 import { useLocation, useNavigate } from "react-router-dom";
 
 function Sidebar({ drawerWidth }) {

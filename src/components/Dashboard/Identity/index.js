@@ -33,7 +33,7 @@ function IdentityView() {
   const [age, dispatchAge] = useInput((_) => null, "22");
   const [gender, dispatchGender] = useInput((_) => null, "Male");
   const [debitor, dispatchDebitor] = useInput((_) => null, "0912345678");
-  const [toast, setToast] = useState(null);
+  const [toast] = useState(null);
   const [identityStatus, setIdentityStatus] = useState(true);
 
   const onClickIdentityStatus = () => setIdentityStatus((state) => !state);

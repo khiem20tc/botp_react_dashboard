@@ -24,7 +24,7 @@ function Analyser() {
         display: "flex",
         alignItems: "center",
         bgcolor: (theme) =>
-          isUp ? theme.palette.primary.light : theme.palette.error.light,
+          isUp ? theme.palette.primary.main : theme.palette.error.main,
         color: "#ffffff",
         padding: 0.1,
         lineHeight: 1,
@@ -119,7 +119,7 @@ function Analyser() {
 
   return (
     <Box sx={{ py: 4, pl: 4 }}>
-      <Typography variant="h5" sx={{ mb: 2 }}>
+      <Typography variant="h6" sx={{ mb: 2 }}>
         Overview
       </Typography>
       <Box sx={{ display: "flex" }}>
@@ -154,7 +154,7 @@ function Analyser() {
           />
         )}
       </Box>
-      <Typography variant="h5" sx={{ mb: 2, mt: 4 }}>
+      <Typography variant="h6" sx={{ mb: 2, mt: 4 }}>
         Chart
       </Typography>
       <Box sx={{ display: "flex" }}>

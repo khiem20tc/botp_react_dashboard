@@ -8,7 +8,7 @@ import Dashboard from "components/Dashboard";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserInfoAction } from "actions/user";
 import { useEffect, useState } from "react";
-import { CircularProgress, Modal } from "@mui/material";
+import { CircularProgress } from "@mui/material";
 import Auth from "components/Auth";
 import { Box } from "@mui/system";
 

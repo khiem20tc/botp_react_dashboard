@@ -45,15 +45,15 @@ function ProvenanceView() {
     (_) => null,
     "0x4c1e8808c84e0680c7d7d7276c62a1659509bd3fcd45b073b316e06369501a976e85433bb297546e91a26f6bd4018548873cacdae4422df95717186df716e57c1b"
   );
-  const [explorerId1, dispatchExplorerId1] = useInput(
+  const [explorerId1] = useInput(
     (_) => null,
     "0x0026951a2c1dbe69713d8bfe40e6c749ad58c33512196834b69d366928618dce"
   );
-  const [explorerId2, dispatchExplorerId2] = useInput(
+  const [explorerId2] = useInput(
     (_) => null,
     "0x8e9b2ec73b95e09db7a13c64bd30beb7b38faba3bfc8ca96f82aa3d3d343a054"
   );
-  const [toast, setToast] = useState(null);
+  const [toast] = useState(null);
   const [provenanceStatus, setProvenanceStatus] = useState(true);
 
   const onClickProvenanceStatus = () => setProvenanceStatus((state) => !state);
