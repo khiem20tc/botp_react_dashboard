@@ -4,6 +4,7 @@ import {
   Alert,
   Box,
   Collapse,
+  Divider,
   FormControl,
   FormHelperText,
   InputLabel,
@@ -78,13 +79,16 @@ function IdentityView() {
     <Box sx={{ py: 4, pl: 4 }}>
       <Box sx={{ display: "flex" }}>
         <Box sx={{ flex: 2, mr: 4, mb: 4 }}>
-          <Box sx={{ mb: 4 }}>
-            <Typography variant="h5" sx={{ mb: 1 }}>
+          <Box sx={{ mb: 6 }}>
+            <Typography variant="h4" sx={{ mb: 2 }}>
               Lookup User Identity
             </Typography>
-            <Typography variant="body2">Find your user identity.</Typography>
+            <Typography variant="body1">Find your user identity.</Typography>
           </Box>
           <Box sx={{ mb: 2 }}>
+            <Typography variant="body2" sx={{ mb: 1 }}>
+              User information
+            </Typography>
             <Box sx={{ mb: 1 }}>
               <Collapse in={toast !== null}>
                 {toast && (
@@ -130,15 +134,16 @@ function IdentityView() {
             Lookup Identity
           </LoadingButton>
         </Box>
+        <Divider orientation="vertical" flexItem />
         <Box
           component="div"
-          sx={{ flex: 3, mr: 4, overflow: "auto", height: "100%" }}
+          sx={{ flex: 3, mx: 4, overflow: "auto", height: "100%" }}
         >
           {identityStatusSection(identityStatus, onClickIdentityStatus)}
           <Box sx={{ flex: 1, mb: 4 }}>
             <Box sx={{ mb: 2 }}>
               <Typography variant="body2" sx={{ mb: 2 }}>
-                User information
+                User identity
               </Typography>
               <FormControl
                 error={fullname.showError && fullname.error !== null}

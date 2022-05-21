@@ -4,6 +4,7 @@ import {
   Alert,
   Box,
   Collapse,
+  Divider,
   FormControl,
   FormHelperText,
   InputLabel,
@@ -101,15 +102,18 @@ function ProvenanceView() {
     <Box sx={{ py: 4, pl: 4 }}>
       <Box sx={{ display: "flex" }}>
         <Box sx={{ flex: 2, mr: 4, mb: 4 }}>
-          <Box sx={{ mb: 4 }}>
-            <Typography variant="h5" sx={{ mb: 1 }}>
-              Lookup Transaction Provenance
+          <Box sx={{ mb: 6 }}>
+            <Typography variant="h4" sx={{ mb: 2 }}>
+              Lookup Provenance
             </Typography>
-            <Typography variant="body2">
+            <Typography variant="body1">
               Check your transaction provenance right in Blockchain Explorer.
             </Typography>
           </Box>
           <Box sx={{ mb: 2 }}>
+            <Typography variant="body2" sx={{ mb: 1 }}>
+              Transaction information
+            </Typography>
             <Box sx={{ mb: 1 }}>
               <Collapse in={toast !== null}>
                 {toast && (
@@ -205,13 +209,14 @@ function ProvenanceView() {
             Lookup Provenance
           </LoadingButton>
         </Box>
+        <Divider orientation="vertical" flexItem />
         <Box
           component="div"
-          sx={{ flex: 3, mr: 4, overflow: "auto", height: "100%" }}
+          sx={{ flex: 3, mx: 4, overflow: "auto", height: "100%" }}
         >
           {provenanceStatusSection(provenanceStatus, onClickProvenanceStatus)}
           <Box sx={{ flex: 1, mb: 4 }}>
-            <Box sx={{ mb: 2 }}>
+            <Box sx={{ mb: 4 }}>
               <Typography variant="body2" sx={{ mb: 2 }}>
                 Broadcast event
               </Typography>
@@ -335,7 +340,7 @@ function ProvenanceView() {
               </LoadingButton>
             </Box>
 
-            <Box sx={{ mb: 2 }}>
+            <Box sx={{ mb: 4 }}>
               <Typography variant="body2" sx={{ mb: 2 }}>
                 History event
               </Typography>

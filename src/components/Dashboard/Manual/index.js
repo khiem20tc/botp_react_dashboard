@@ -8,16 +8,21 @@ function ManualView() {
   return (
     <Box sx={{ py: 4, pl: 4 }}>
       <Box sx={{ mb: 5 }}>
-        <Typography variant="h5" sx={{ mb: 1 }}>
+        <Typography variant="h4" sx={{ mb: 2 }}>
           BOTP Manual
         </Typography>
-        <Typography variant="body2">
+        <Typography variant="body1">
           This manual would describe how setup and implement a system that can
           interact with BOTP APIs and also use our services.
         </Typography>
       </Box>
-      <Typography variant="h6">1. Setup QR</Typography>
-      <Box sx={{ display: "flex" }}></Box>
+      <Typography variant="h5" sx={{ mb: 1 }}>
+        1. Setup QR
+      </Typography>
+      <Typography variant="body1">
+        This manual would describe how setup and implement a system that can
+        interact with BOTP APIs and also use our services.
+      </Typography>
     </Box>
   );
 }
