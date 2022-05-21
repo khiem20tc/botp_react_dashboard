@@ -24,7 +24,7 @@ function Analyser() {
         display: "flex",
         alignItems: "center",
         bgcolor: (theme) =>
-          isUp ? theme.palette.success.light : theme.palette.error.light,
+          isUp ? theme.palette.primary.light : theme.palette.error.light,
         color: "#ffffff",
         padding: 0.1,
         lineHeight: 1,

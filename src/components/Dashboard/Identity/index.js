@@ -251,7 +251,7 @@ function IdentityView() {
                 <OutlinedInput
                   id="outlined-debitor"
                   type={"text"}
-                  value={gender.value}
+                  value={debitor.value}
                   onChange={(e) =>
                     dispatchDebitor({
                       type: UserInputAction.ON_CHANGE,
