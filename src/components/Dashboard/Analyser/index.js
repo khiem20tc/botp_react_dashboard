@@ -74,13 +74,16 @@ function Analyser() {
           },
         }}
       >
-        <CardContent
+        <Box
           sx={{
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
             width: "100%",
-            padding: 3,
+            pt: 2,
+            pb: 2,
+            pl: 2,
+            pr: 2,
           }}
         >
           <Box sx={{ width: "100%" }}>
@@ -118,7 +121,7 @@ function Analyser() {
               </Box>
             </Box>
           </Box>
-        </CardContent>
+        </Box>
       </Card>
     </Box>
   );
@@ -163,12 +166,21 @@ function Analyser() {
       <Typography variant="h6" sx={{ mb: 2, mt: 4 }}>
         Chart
       </Typography>
-      <Box sx={{ display: "flex", width: "%" }}>
-        <Box sx={{ flex: 1, mr: 2 }}>
-          <Typography variant="body2" sx={{ mb: 1 }}>
+      <Box sx={{ display: "flex" }}>
+        <Box
+          sx={{
+            flex: 1,
+            mr: 4,
+            p: 2,
+            boxShadow: "0px 2px 30px 0px rgb(0, 0, 0, 0.1)",
+            borderRadius: "12px",
+            cursor: "pointer",
+          }}
+        >
+          <Typography variant="body2" sx={{ mb: 2 }} color="text.secondary">
             Daily users
           </Typography>
-          <ResponsiveContainer height={340}>
+          <ResponsiveContainer height={380}>
             <LineChart data={userDataToday}>
               <XAxis dataKey="name" />
               <YAxis dataKey="tu" />
@@ -202,11 +214,20 @@ function Analyser() {
             flexDirection: "column",
             height: "100%",
             justifyContent: "space-between",
-            mr: 2,
+            mr: 4,
           }}
         >
-          <Box sx={{ flex: 1, mb: 3 }}>
-            <Typography variant="body2" sx={{ mb: 1 }}>
+          <Box
+            sx={{
+              flex: 1,
+              mb: 4,
+              p: 2,
+              boxShadow: "0px 2px 30px 0px rgb(0, 0, 0, 0.1)",
+              borderRadius: "12px",
+              cursor: "pointer",
+            }}
+          >
+            <Typography variant="body2" sx={{ mb: 2 }} color="text.secondary">
               Weekly users
             </Typography>
             <ResponsiveContainer height={140}>
@@ -236,8 +257,16 @@ function Analyser() {
               </LineChart>
             </ResponsiveContainer>
           </Box>
-          <Box sx={{ flex: 1 }}>
-            <Typography variant="body2" sx={{ mb: 1 }}>
+          <Box
+            sx={{
+              flex: 1,
+              p: 2,
+              boxShadow: "0px 2px 30px 0px rgb(0, 0, 0, 0.1)",
+              borderRadius: "12px",
+              cursor: "pointer",
+            }}
+          >
+            <Typography variant="body2" sx={{ mb: 2 }} color="text.secondary">
               Monthly users
             </Typography>
             <ResponsiveContainer height={140}>
