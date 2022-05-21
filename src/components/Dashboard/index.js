@@ -22,7 +22,6 @@ function Dashboard() {
         sx={{
           flexGrow: 1,
           width: { sm: `calc(100% - ${drawerWidth}px)` },
-          height: "100%",
         }}
       >
         <Toolbar />
