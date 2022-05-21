@@ -53,7 +53,7 @@ function ProvenanceView() {
     "0x8e9b2ec73b95e09db7a13c64bd30beb7b38faba3bfc8ca96f82aa3d3d343a054"
   );
   const [toast, setToast] = useState(null);
-  const [provenanceStatus, setProvenanceStatus] = useState(null);
+  const [provenanceStatus, setProvenanceStatus] = useState(true);
 
   const onClickProvenanceStatus = () => setProvenanceStatus((state) => !state);
   const provenanceStatusSection = (isMatched, onClickProvenanceStatus) => (
@@ -106,7 +106,7 @@ function ProvenanceView() {
               Lookup Transaction Provenance
             </Typography>
             <Typography variant="body2">
-              Check your transaction provenance right in Blockchain Explorer
+              Check your transaction provenance right in Blockchain Explorer.
             </Typography>
           </Box>
           <Box sx={{ mb: 2 }}>
@@ -149,11 +149,11 @@ function ProvenanceView() {
               sx={{ mb: 1, width: "100%" }}
               variant="outlined"
             >
-              <InputLabel htmlFor="outlined-agent-bc-address" size="small">
+              <InputLabel htmlFor="outlined-user-bc-address" size="small">
                 User blockchain address
               </InputLabel>
               <OutlinedInput
-                id="outlined-agent-bc-address"
+                id="outlined-user-bc-address"
                 type={"text"}
                 value={userBcAddress.value}
                 onChange={(e) =>
@@ -165,7 +165,7 @@ function ProvenanceView() {
                 label="User blockchain address"
                 size="small"
               />
-              <FormHelperText id="outlined-adornment-agent-bc-address-text">
+              <FormHelperText id="outlined-adornment-user-bc-address-text">
                 {userBcAddress.showError ? userBcAddress.error : ""}
               </FormHelperText>
             </FormControl>
@@ -202,7 +202,7 @@ function ProvenanceView() {
             onClick={() => {}}
             endIcon={<Search />}
           >
-            Lookup
+            Lookup Provenance
           </LoadingButton>
         </Box>
         <Box
@@ -247,11 +247,11 @@ function ProvenanceView() {
                 sx={{ mb: 1, width: "100%" }}
                 variant="outlined"
               >
-                <InputLabel htmlFor="outlined-agent-bc-address" size="small">
+                <InputLabel htmlFor="outlined-user-bc-address" size="small">
                   User blockchain address
                 </InputLabel>
                 <OutlinedInput
-                  id="outlined-agent-bc-address"
+                  id="outlined-user-bc-address"
                   type={"text"}
                   value={userBcAddress.value}
                   onChange={(e) =>
@@ -263,7 +263,7 @@ function ProvenanceView() {
                   label="User blockchain address"
                   size="small"
                 />
-                <FormHelperText id="outlined-adornment-agent-bc-address-text">
+                <FormHelperText id="outlined-adornment-user-bc-address-text">
                   {userBcAddress.showError ? userBcAddress.error : ""}
                 </FormHelperText>
               </FormControl>
@@ -371,11 +371,11 @@ function ProvenanceView() {
                 sx={{ mb: 1, width: "100%" }}
                 variant="outlined"
               >
-                <InputLabel htmlFor="outlined-agent-bc-address" size="small">
+                <InputLabel htmlFor="outlined-user-bc-address" size="small">
                   User blockchain address
                 </InputLabel>
                 <OutlinedInput
-                  id="outlined-agent-bc-address"
+                  id="outlined-user-bc-address"
                   type={"text"}
                   value={userBcAddress.value}
                   onChange={(e) =>
@@ -387,7 +387,7 @@ function ProvenanceView() {
                   label="User blockchain address"
                   size="small"
                 />
-                <FormHelperText id="outlined-adornment-agent-bc-address-text">
+                <FormHelperText id="outlined-adornment-user-bc-address-text">
                   {userBcAddress.showError ? userBcAddress.error : ""}
                 </FormHelperText>
               </FormControl>
