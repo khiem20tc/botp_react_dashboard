@@ -89,7 +89,7 @@ function Analyser() {
                 <Typography
                   variant="h4"
                   component="div"
-                  sx={{ fontWeight: "bold", opacity: 0.8 }}
+                  sx={{ fontWeight: "bold", opacity: 1 }}
                 >
                   {new Intl.NumberFormat().format(number)}
                 </Typography>
@@ -105,7 +105,7 @@ function Analyser() {
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  opacity: 0.8,
+                  opacity: 0.5,
                 }}
               >
                 {icon}
@@ -119,7 +119,7 @@ function Analyser() {
 
   return (
     <Box sx={{ py: 4, pl: 4 }}>
-      <Typography variant="h6" sx={{ mb: 2 }}>
+      <Typography variant="h5" sx={{ mb: 2 }}>
         Overview
       </Typography>
       <Box sx={{ display: "flex" }}>
@@ -154,7 +154,7 @@ function Analyser() {
           />
         )}
       </Box>
-      <Typography variant="h6" sx={{ mb: 2, mt: 4 }}>
+      <Typography variant="h5" sx={{ mb: 2, mt: 4 }}>
         Chart
       </Typography>
       <Box sx={{ display: "flex" }}>
