@@ -125,9 +125,8 @@ function Manual() {
         <Typography variant="body2" sx={{ mb: 0.5 }}>
           Finally, when the user entered the OTP received from BOTP app, your
           system don't need to verify it by hand, but by calling our{" "}
-          {formatCodeText("agentValidateOTP")} API.
-          {formatBoldText("get your API-Key")} in{" "}
-          {formatCodeText("BOTP Dashboard > Settings > Profile")}
+          {formatCodeText("agentValidateOTP")} API. We recommended the{" "}
+          {formatCodeText("SHA-512")} algorithm to generate OTP.
         </Typography>
         <Typography variant="body2">
           <Box sx={{ my: 1 }}>
