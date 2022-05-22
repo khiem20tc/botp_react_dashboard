@@ -1,5 +1,12 @@
 import { Box, Typography } from "@mui/material";
-import { qrImageContent, registerUserContent } from "common/mock/maunal";
+import {
+  agentValidateOtpApiBodyObj,
+  agentValidateOtpApiUrl,
+  qrImageContent,
+  registerUserContent,
+  sendMessageApiBodyObj,
+  sendMessageApiUrl,
+} from "common/mock/maunal";
 import { CodeBlock, dracula } from "react-code-blocks";
 import QRCode from "react-qr-code";
 
@@ -81,7 +88,61 @@ function Manual() {
         <Typography variant="h6" sx={{ mb: 0.5 }}>
           2. Integrate with BOTP APIs to validate OTP
         </Typography>
-        <Typography variant="body2"></Typography>
+        <Typography variant="body2" sx={{ mb: 0.5 }}>
+          Next, you have to integrate with our APIs to authenticate the 2FA
+          process. But in advance, you have to{" "}
+          {formatBoldText("get your API-Key")} in{" "}
+          {formatCodeText("BOTP Dashboard > Settings > Profile")}
+        </Typography>
+        <Typography variant="body2">
+          When the second factor authentication is needed, your system call the{" "}
+          {formatCodeText("sendMessage")} API first to{" "}
+          {formatBoldText("send transaction message to the users")}. In
+          particular, each message contains {formatCodeText("userAddress")}{" "}
+          (user blockchain address), {formatCodeText("notifyMessage")}{" "}
+          (transaction message that shown up to the user), and{" "}
+          {formatCodeText("message")} (private message to generate OTP code, and
+          is not shown up)
+        </Typography>
+        <Typography variant="body2">
+          <Box sx={{ my: 1 }}>
+            <CodeBlock
+              text={sendMessageApiUrl}
+              theme={dracula}
+              language="javascript"
+            />
+          </Box>
+        </Typography>
+        <Typography variant="body2">
+          <Box sx={{ my: 1 }}>
+            <CodeBlock
+              text={JSON.stringify(sendMessageApiBodyObj, null, 2)}
+              theme={dracula}
+              language="javascript"
+            />
+          </Box>
+        </Typography>
+        <Typography variant="body2" sx={{ mb: 0.5 }}>
+          Finally, when the user entered the OTP received from BOTP app, your
+          system don't need to verify it by hand, but by calling our{" "}
+          {formatCodeText("agentValidateOTP")} API.
+          {formatBoldText("get your API-Key")} in{" "}
+          {formatCodeText("BOTP Dashboard > Settings > Profile")}
+        </Typography>
+        <Typography variant="body2">
+          <Box sx={{ my: 1 }}>
+            <CodeBlock text={agentValidateOtpApiUrl} theme={dracula} />
+          </Box>
+        </Typography>
+        <Typography variant="body2">
+          <Box sx={{ my: 1 }}>
+            <CodeBlock
+              text={JSON.stringify(agentValidateOtpApiBodyObj, null, 2)}
+              theme={dracula}
+              language="javascript"
+            />
+          </Box>
+        </Typography>
       </Box>
     </Box>
   );
